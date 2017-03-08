@@ -1,0 +1,69 @@
+<!--<resources>-->
+
+<!--&lt;!&ndash; Base application theme. &ndash;&gt;--><!--&lt;!&ndash;<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">&ndash;&gt;--><!--<style name="AppTheme" parent="AppTheme.Base">--><!--&lt;!&ndash; Customize your theme here. &ndash;&gt;--><!--&lt;!&ndash; toolbar（actionbar）颜色 &ndash;&gt;--><!--<item name="colorPrimary">@color/colorPrimary</item>--><!--&lt;!&ndash;toolbar标题文字颜色&ndash;&gt;--><!--<item name="android:textColorPrimary">@android:color/white</item>--><!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>--><!--<item name="colorAccent">@color/colorAccent</item>--><!--<item name="android:windowTranslucentStatus">true</item>--><!--</style>-->
+
+
+<!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >-->
+
+<!--</style>-->
+
+<!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >--><!--<item name="windowActionBar">false</item>--><!--<item name="windowNoTitle">true</item>--><!--<item name="android:windowTranslucentStatus">true</item>--><!--</style>-->
+
+<!--<style name="AppTheme.NoActionBar">--><!--<item name="windowActionBar">false</item>--><!--<item name="windowNoTitle">true</item>--><!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>--><!--<item name="android:statusBarColor">@android:color/transparent</item>--><!--<item name="android:windowTranslucentStatus">true</item>--><!--</style>-->
+
+<!--&lt;!&ndash; 全屏幕拉伸&ndash;&gt;--><!--<style name="layout_full">--><!--<item name="android:layout_width">fill_parent</item>--><!--<item name="android:layout_height">fill_parent</item>--><!--</style>-->
+
+<!--&lt;!&ndash; 固定自身大小&ndash;&gt;--><!--<style name="layout_wrap">--><!--<item name="android:layout_width">wrap_content</item>--><!--<item name="android:layout_height">wrap_content</item>--><!--</style>--><!--&lt;!&ndash; 横向分布&ndash;&gt;--><!--<style name="layout_horizontal" parent="layout_full">--><!--<item name="android:layout_width">0px</item>--><!--</style>-->
+
+<!--&lt;!&ndash; 纵向分布&ndash;&gt;--><!--<style name="layout_vertical" parent="layout_full">--><!--<item name="android:layout_height">0px</item>--><!--</style>-->
+
+<!--<style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">--><!--</style>--><!--</resources>-->
+
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+//状态栏字体颜色
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- 全屏幕拉伸-->
+    <style name="layout_full">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <!-- 固定自身大小-->
+    <style name="layout_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!-- 横向分布-->
+    <style name="layout_horizontal" parent="layout_full">
+        <item name="android:layout_width">0px</item>
+    </style>
+
+    <!-- 纵向分布-->
+    <style name="layout_vertical" parent="layout_full">
+        <item name="android:layout_height">0px</item>
+    </style>
+
+</resources>
+

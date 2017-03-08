@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--内容布局-->
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#9b9b9b"
+    android:layout_margin="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:background="@drawable/shapefile"-->
+    <com.example.yyy.fingerprint.SlideCutListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listview"
+        tools:showIn="@layout/app_bar_main"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:padding="15dp"
+        android:background="#ffffff"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        >
+        <!--android:divider="#9b9b9b"-->
+        <!--android:dividerHeight="1dp"-->
+    </com.example.yyy.fingerprint.SlideCutListView>
+
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        style="@style/layout_vertical"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:id="@+id/topmenu"
+        android:background="#ff888888">
+        <LinearLayout
+            style="@style/layout_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/toplayout1"
+            android:background="@null">
+            <ImageView
+                android:src="@drawable/homeunpressed"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/topimage1"
+                android:padding="10dp"
+                android:background="@null"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/layout_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/toplayout2"
+            android:background="@null">
+            <ImageView
+                android:src="@drawable/bellunpressed"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/topimage2"
+                android:padding="10dp"
+                android:background="@null"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/layout_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/toplayout3"
+            android:background="@null">
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/messageunpressed"
+                android:padding="10dp"
+                android:id="@+id/topimage3"
+                android:background="@null"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!--top-->
+
+    <LinearLayout
+        style="@style/layout_vertical"
+        android:layout_weight="13"
+        android:id="@+id/backgroundlayout"
+
+        android:orientation="horizontal" />
+    <!--内容-->
+    <!--android:background="@drawable/shapefile"-->
+
+
+
+
+
+
+</LinearLayout>
