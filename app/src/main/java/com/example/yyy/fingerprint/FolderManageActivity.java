@@ -26,8 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yyy.fingerprint.FolderManage.Authority;
-import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.LunxunService.Synchro;
@@ -240,7 +238,7 @@ public class FolderManageActivity extends AppCompatActivity {
                     List<Synchro> synchros = (List<Synchro>) msg.obj;
                     for(int i = 0;i < synchros.size();i++) {
                         Synchro synchros1 = synchros.get(i);
-                        strs.add(new String[]{synchros1.getFile_path(),synchros1.getCpu_id()});
+                        strs.add(new String[]{synchros1.getFile_path(),synchros1.getGuid()});
                     }
                     arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
                     lv.setAdapter(arrayAdapter);

@@ -5,22 +5,22 @@ package com.example.yyy.fingerprint.FolderManage;
  */
 
 public class Authority {
-    private String cpu_id;//电脑id
+    private String guid;//电脑id
     private String file_path;//文件目录
     private String authority_number;//限权管理
 
-    public Authority(String cpu_id, String file_path, String authority_number) {
-        this.cpu_id = cpu_id;
+    public Authority(String guid, String file_path, String authority_number) {
+        this.guid = guid;
         this.file_path = file_path;
         this.authority_number = authority_number;
     }
 
-    public String getCpu_id() {
-        return cpu_id;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setCpu_id(String cpu_id) {
-        this.cpu_id = cpu_id;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getFile_path() {

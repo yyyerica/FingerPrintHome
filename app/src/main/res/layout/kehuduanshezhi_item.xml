@@ -23,12 +23,12 @@
             android:text="取名：电脑1"
             android:layout_gravity="center"
             android:textSize="30sp"
-            android:id="@+id/cpuidText"/>
+            android:id="@+id/guidText"/>
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="ip:194.111.111.11"-->
-            <!--android:id="@+id/cpuidText"-->
+            <!--android:id="@+id/guidText"-->
             <!--android:textSize="10sp"-->
             <!--android:layout_gravity="center"/>-->
 </LinearLayout>

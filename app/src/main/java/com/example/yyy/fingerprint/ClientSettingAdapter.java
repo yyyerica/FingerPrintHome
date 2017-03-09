@@ -49,7 +49,7 @@ public class ClientSettingAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
 //            time = (TextView)view.findViewById(R.id.timeText);
-            name = (TextView)view.findViewById(R.id.cpuidText);
+            name = (TextView)view.findViewById(R.id.guidText);
 //            date = (TextView)view.findViewById(R.id.dateText);
         } else {
             view = convertView;

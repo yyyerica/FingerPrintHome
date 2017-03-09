@@ -150,8 +150,8 @@ public class BootService extends Service {
 //            String[] sourceStrArray = response.split("&");
 //            Log.d("length", sourceStrArray.length+"");
 //            for (int i = 0; i < sourceStrArray.length; i+=6) {
-//                String cpu_id = sourceStrArray[i].split("=")[1];
-//                Log.d("cpu_id", cpu_id);
+//                String guid = sourceStrArray[i].split("=")[1];
+//                Log.d("guid", guid);
 //                String file_path = sourceStrArray[i+1].split("=")[1];
 //                Log.d("file_path", file_path);
 //                String authority_number = sourceStrArray[i+2].split("=")[1];
@@ -163,7 +163,7 @@ public class BootService extends Service {
 //                String isPermit = sourceStrArray[i+5].split("=")[1];
 //                Log.d("isPermit", isPermit);
 //
-//                Synchro synchro = new Synchro(cpu_id, file_path, authority_number, operate_date, operate_time, isPermit);
+//                Synchro synchro = new Synchro(guid, file_path, authority_number, operate_date, operate_time, isPermit);
 //                synchros.add(synchro);
 //            }
 //

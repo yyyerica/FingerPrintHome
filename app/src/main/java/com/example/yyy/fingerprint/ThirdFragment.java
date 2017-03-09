@@ -90,14 +90,14 @@ public class ThirdFragment extends Fragment {
                     List<Authority> authorityList = (List<Authority>) msg.obj;
                     for(int i = 0;i < authorityList.size();i++) {
                         Authority authority = authorityList.get(i);
-                        if(!contentCpu_id(group_list,authority)) {//group没有item没有
-                            group_list.add(authority.getCpu_id());
+                        if(!contentGuid(group_list,authority)) {//group没有item没有
+                            group_list.add(authority.getGuid());
                             ArrayList<String> itemlistitem = new ArrayList<>();
                             itemlistitem.add(authority.getFile_path());
                             item_list.add(itemlistitem);
                         } else { //有group,添加item子项
                             for (int a=0;a<group_list.size();a++) {
-                                if (group_list.get(a).equals(authority.getCpu_id())){
+                                if (group_list.get(a).equals(authority.getGuid())){
                                     item_list.get(a).add(authority.getFile_path());
                                 }
 
@@ -111,9 +111,9 @@ public class ThirdFragment extends Fragment {
         }
     };
 
-    public boolean contentCpu_id(List a,Authority authority){
+    public boolean contentGuid(List a,Authority authority){
         for (int i=0;i<a.size();i++){
-            if(authority.getCpu_id().equals(a.get(i))){
+            if(authority.getGuid().equals(a.get(i))){
                 return true;
             }
         }

@@ -1,11 +1,10 @@
 package com.example.yyy.fingerprint;
 
 
-import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -220,7 +216,7 @@ public class CalendarFragment extends Fragment {
                     List<History> histories = (List<History>)msg.obj;
                     for(int i=0;i<histories.size();i++) {
                         History history = histories.get(i);
-                        strs.add(new String[]{history.getFile_path(),history.getOperate_time(),"客户端 : "+history.getCpu_id()});
+                        strs.add(new String[]{history.getFile_path(),history.getOperate_time(),"客户端 : "+history.getGuid()});
                         Log.e("getFile_path",history.getFile_path());
                     }
                     lv.setAdapter(arrayAdapter);

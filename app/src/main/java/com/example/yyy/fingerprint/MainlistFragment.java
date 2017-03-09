@@ -6,33 +6,26 @@ import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
-
 import com.example.yyy.fingerprint.LunxunService.Synchro;
 import com.example.yyy.fingerprint.LunxunService.SynchroThread;
 import com.example.yyy.fingerprint.LunxunService.VerifyThread;
@@ -41,8 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.example.yyy.fingerprint.SlideCutListView.RemoveDirection.LEFT;
-import static com.example.yyy.fingerprint.SlideCutListView.RemoveDirection.RIGHT;
 
 
 public class MainlistFragment extends Fragment implements SlideCutListView.RemoveListener {
@@ -51,8 +42,8 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
     KeyguardManager mKeyManager;
     Fragment me;
 
-//    String[] arr1 = {"2-17","dota","16:45","cpuid"};
-//    String[] arr2 = {"2-14","lol","23:09","cpuid"};
+//    String[] arr1 = {"2-17","dota","16:45","guid"};
+//    String[] arr2 = {"2-14","lol","23:09","guid"};
 //    ArrayList<String[]> strs = new ArrayList<String[]>(){{add(arr1); add(arr1); add(arr1); add(arr1); add(arr1); add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);}};
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
 
@@ -191,7 +182,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
                 boolean isSend = true;
                 for(int i = 0 ; i < synchros.size(); i++) {
                     Synchro synchros1 = synchros.get(i);
-                    strs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getCpu_id()});
+                    strs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
                     if (synchros1.getIsSend().equals("NO"))
                         isSend = false;
                 }

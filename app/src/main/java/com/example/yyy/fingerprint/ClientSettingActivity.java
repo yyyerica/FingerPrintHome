@@ -7,15 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,13 +27,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.yyy.fingerprint.FolderManage.Authority;
-import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.LunxunService.Synchro;
 import com.example.yyy.fingerprint.LunxunService.SynchroThread;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,7 +217,7 @@ public class ClientSettingActivity extends AppCompatActivity {
                     List<Synchro> synchros = (List<Synchro>) msg.obj;
                     for(int i = 0;i < synchros.size();i++) {
                         Synchro synchros1 = synchros.get(i);
-                        strs.add(synchros1.getCpu_id());
+                        strs.add(synchros1.getGuid());
                     }
 
                     arrayAdapter.notifyDataSetChanged();

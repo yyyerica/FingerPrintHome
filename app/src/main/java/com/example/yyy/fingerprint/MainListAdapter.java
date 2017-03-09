@@ -6,13 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by YYY on 2017/2/15.
@@ -21,7 +17,7 @@ import java.util.Map;
 public class MainListAdapter extends ArrayAdapter<String[]> {
 
     private int resourceId;
-    private TextView date,time,name,cpuid;
+    private TextView date,time,name,guid;
 
 
     // 第一个参数是上下文，一般为this。
@@ -56,7 +52,7 @@ public class MainListAdapter extends ArrayAdapter<String[]> {
             time = (TextView)view.findViewById(R.id.timeText);
             name = (TextView)view.findViewById(R.id.nameText);
             date = (TextView)view.findViewById(R.id.dateText);
-            cpuid = (TextView)view.findViewById(R.id.cpuidText);
+            guid = (TextView)view.findViewById(R.id.guidText);
         } else {
             view = convertView;
         }
@@ -66,7 +62,7 @@ public class MainListAdapter extends ArrayAdapter<String[]> {
                 date.setText(map[0]);
                 name.setText(map[1]);
                 time.setText(map[2]);
-                cpuid.setText(map[3]);
+                guid.setText(map[3]);
             }
         }
 

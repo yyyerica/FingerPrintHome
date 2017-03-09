@@ -5,15 +5,15 @@ package com.example.yyy.fingerprint.FolderHistory;
  */
 
 public class History {
-    private String cpu_id;
+    private String guid;
     private String file_path;
     private String authority_number;//权限
     private String operate_time;
     private String isPermit;
     private String isCheck;
 
-    public History(String cpu_id, String file_path, String authority_number, String operate_time, String isPermit, String isCheck) {
-        this.cpu_id = cpu_id;
+    public History(String guid, String file_path, String authority_number, String operate_time, String isPermit, String isCheck) {
+        this.guid = guid;
         this.file_path = file_path;
         this.authority_number = authority_number;
         this.operate_time = operate_time;
@@ -21,12 +21,12 @@ public class History {
         this.isCheck = isCheck;
     }
 
-    public String getCpu_id() {
-        return cpu_id;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setCpu_id(String cpu_id) {
-        this.cpu_id = cpu_id;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getFile_path() {

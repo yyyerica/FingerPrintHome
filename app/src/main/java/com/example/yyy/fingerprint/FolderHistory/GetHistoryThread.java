@@ -1,11 +1,8 @@
 package com.example.yyy.fingerprint.FolderHistory;
 
-import android.app.Activity;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-
 
 import com.example.yyy.fingerprint.CalendarFragment;
 import com.example.yyy.fingerprint.LoginRegister.PostOptions;
@@ -85,8 +82,8 @@ public class GetHistoryThread extends Thread {
             String[] sourceStrArray = response.split("&");
             Log.d("length", sourceStrArray.length+"");
             for (int i = 0; i < sourceStrArray.length; i+=6) {
-                String cpu_id = sourceStrArray[i].split("=")[1];
-                Log.d("cpu_id", cpu_id);
+                String guid = sourceStrArray[i].split("=")[1];
+                Log.d("guid", guid);
                 String file_path = sourceStrArray[i+1].split("=")[1];
                 Log.d("file_path", file_path);
                 String authority_number = sourceStrArray[i+2].split("=")[1];
@@ -97,7 +94,7 @@ public class GetHistoryThread extends Thread {
                 Log.d("isPermit", isPermit);
                 String isCheck = sourceStrArray[i+5].split("=")[1];
                 Log.d("isCheck", isCheck);
-                History history = new History(cpu_id, file_path, authority_number, operate_time, isPermit, isCheck);
+                History history = new History(guid, file_path, authority_number, operate_time, isPermit, isCheck);
                 histories.add(history);
             }
 

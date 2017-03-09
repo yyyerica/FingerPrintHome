@@ -109,13 +109,13 @@ public class GetAuthorityThread extends Thread {
             Log.d("length", sourceStrArray.length+"");
             List<Authority> authorities = new ArrayList<>();
             for (int i = 0; i < sourceStrArray.length; i+=3) {
-                String cpu_id = sourceStrArray[i].split("=")[1];
-                Log.d("cpu_id", cpu_id);
+                String guid = sourceStrArray[i].split("=")[1];
+                Log.d("guid", guid);
                 String file_path = sourceStrArray[i+1].split("=")[1];
                 Log.d("file_path", file_path);
                 String authority_number = sourceStrArray[i+2].split("=")[1];
                 Log.d("authority_number", authority_number);
-                Authority authority = new Authority(cpu_id, file_path, authority_number);
+                Authority authority = new Authority(guid, file_path, authority_number);
                 authorities.add(authority);
                 //mClientDatabaseHelper.insertAuthority(authority);
             }

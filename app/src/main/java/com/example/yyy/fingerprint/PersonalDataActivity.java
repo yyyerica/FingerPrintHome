@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +19,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +37,6 @@ import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.LunxunService.Synchro;
 import com.example.yyy.fingerprint.LunxunService.SynchroThread;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -261,7 +260,7 @@ public class PersonalDataActivity extends AppCompatActivity {
 
                     for(int i = 0 ; i < synchros.size(); i++) {
                         Synchro synchros1 = synchros.get(i);
-                        arr2[1]+=synchros1.getCpu_id();
+                        arr2[1]+=synchros1.getGuid();
                         if(i<synchros.size()-1)
                             arr2[1]+="\n";
                     }

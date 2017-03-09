@@ -103,8 +103,8 @@ public class SynchroThread extends Thread {
             String[] sourceStrArray = response.split("&");
             Log.d("length", sourceStrArray.length+"");
             for (int i = 0; i < sourceStrArray.length; i+=7) {
-                String cpu_id = sourceStrArray[i].split("=")[1];
-                Log.d("cpu_id", cpu_id);
+                String guid = sourceStrArray[i].split("=")[1];
+                Log.d("guid", guid);
                 String file_path = sourceStrArray[i+1].split("=")[1];
                 Log.d("file_path", file_path);
                 String authority_number = sourceStrArray[i+2].split("=")[1];
@@ -118,7 +118,7 @@ public class SynchroThread extends Thread {
                 String isSend = sourceStrArray[i+6].split("=")[1];
                 Log.d("isSend", isSend);
 
-                Synchro synchro = new Synchro(cpu_id, file_path, authority_number, operate_date, operate_time, isPermit,isSend);
+                Synchro synchro = new Synchro(guid, file_path, authority_number, operate_date, operate_time, isPermit,isSend);
                 synchros.add(synchro);
             }
 

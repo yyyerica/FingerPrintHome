@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CalendarListAdapter extends ArrayAdapter<String[]> {
 
-    TextView timeText,nameText, cupid;
+    TextView timeText,nameText, guid;
 
     private int resourceId;
     public CalendarListAdapter(Context context, int resource, List<String[]> objects) {
@@ -36,7 +36,7 @@ public class CalendarListAdapter extends ArrayAdapter<String[]> {
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             timeText = (TextView)view.findViewById(R.id.timeText);
             nameText = (TextView)view.findViewById(R.id.nameText);
-            cupid = (TextView)view.findViewById(R.id.cpuidText);
+            guid = (TextView)view.findViewById(R.id.guidText);
         } else {
             view = convertView;
         }
@@ -44,7 +44,7 @@ public class CalendarListAdapter extends ArrayAdapter<String[]> {
         if(map!=null) {
                 timeText.setText(map[0]);
                 nameText.setText(map[1]);
-                cupid.setText(map[2]);
+                guid.setText(map[2]);
         }
 
         return view;

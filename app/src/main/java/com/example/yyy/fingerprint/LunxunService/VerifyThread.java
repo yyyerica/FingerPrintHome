@@ -56,11 +56,11 @@ public class VerifyThread extends Thread {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setReadTimeout(5000);
 
-            if (!TextUtils.isEmpty(synchro.getAuthority_number()) && !TextUtils.isEmpty(synchro.getCpu_id())
+            if (!TextUtils.isEmpty(synchro.getAuthority_number()) && !TextUtils.isEmpty(synchro.getGuid())
             && !TextUtils.isEmpty(synchro.getFile_path()) && !TextUtils.isEmpty(synchro.getOperate_date()) &&
                     !TextUtils.isEmpty(synchro.getOperate_time()) && !TextUtils.isEmpty(synchro.getIsPermit())) {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                String source = "cpu_id=" + synchro.getCpu_id()
+                String source = "guid=" + synchro.getGuid()
                         + "&file_path=" + synchro.getFile_path()
                         + "&authority_number=" + synchro.getAuthority_number()
                         + "&operate_date=" + synchro.getOperate_date()

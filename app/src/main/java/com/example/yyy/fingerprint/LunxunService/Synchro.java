@@ -5,7 +5,7 @@ package com.example.yyy.fingerprint.LunxunService;
  */
 
 public class Synchro {
-    private String cpu_id;
+    private String guid;
     private String file_path;
     private String authority_number;
     private String operate_date;
@@ -13,8 +13,8 @@ public class Synchro {
     private String isPermit;//过来的都是No，改为yes返回
     private String isSend;
 
-    public Synchro(String cpu_id, String file_path, String authority_number, String operate_date, String operate_time, String isPermit,String isSend) {
-        this.cpu_id = cpu_id;
+    public Synchro(String guid, String file_path, String authority_number, String operate_date, String operate_time, String isPermit,String isSend) {
+        this.guid = guid;
         this.file_path = file_path;
         this.authority_number = authority_number;
         this.operate_date = operate_date;
@@ -23,12 +23,12 @@ public class Synchro {
         this.isSend = isSend;
     }
 
-    public String getCpu_id() {
-        return cpu_id;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setCpu_id(String cpu_id) {
-        this.cpu_id = cpu_id;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getFile_path() {
