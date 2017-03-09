@@ -27,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.yyy.fingerprint.FolderManage.Authority;
+import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.LunxunService.Synchro;
@@ -71,8 +73,7 @@ public class ClientSettingActivity extends AppCompatActivity {
 
 
         settoolbar();//工具栏
-        new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, ClientSettingActivity.this).start();
-
+        new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, ClientSettingActivity.this).start();
         //侧滑栏
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(3).getSubMenu().getItem(1).setChecked(true);//默认选中
@@ -214,10 +215,10 @@ public class ClientSettingActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 1: //从数据库拿到全体文件列表
-                    List<Synchro> synchros = (List<Synchro>) msg.obj;
-                    for(int i = 0;i < synchros.size();i++) {
-                        Synchro synchros1 = synchros.get(i);
-                        strs.add(synchros1.getGuid());
+                    List<Authority> authorityLis = (List<Authority>) msg.obj;
+                    for(int i = 0;i < authorityLis.size();i++) {
+                        Authority authority1 = authorityLis.get(i);
+                        strs.add(authority1.getGuid());
                     }
 
                     arrayAdapter.notifyDataSetChanged();

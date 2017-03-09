@@ -8,7 +8,8 @@
         style="@style/layout_horizontal"
         android:layout_weight="1"
         android:src="@drawable/foldericon"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"/>
 
     <LinearLayout
         style="@style/layout_horizontal"

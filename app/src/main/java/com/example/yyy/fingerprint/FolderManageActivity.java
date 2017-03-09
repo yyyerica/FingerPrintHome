@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yyy.fingerprint.FolderManage.Authority;
+import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.LunxunService.Synchro;
@@ -226,7 +228,7 @@ public class FolderManageActivity extends AppCompatActivity {
     }
 
     public void request() {
-        new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, FolderManageActivity.this).start();
+        new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, FolderManageActivity.this).start();
     }
 
     public Handler handler = new Handler() {
@@ -235,10 +237,10 @@ public class FolderManageActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 1: //从数据库拿到全体文件列表
-                    List<Synchro> synchros = (List<Synchro>) msg.obj;
+                    List<Authority> synchros = (List<Authority>) msg.obj;
                     for(int i = 0;i < synchros.size();i++) {
-                        Synchro synchros1 = synchros.get(i);
-                        strs.add(new String[]{synchros1.getFile_path(),synchros1.getGuid()});
+                        Authority Authority1 = synchros.get(i);
+                        strs.add(new String[]{Authority1.getFile_path(),Authority1.getGuid()});
                     }
                     arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
                     lv.setAdapter(arrayAdapter);
