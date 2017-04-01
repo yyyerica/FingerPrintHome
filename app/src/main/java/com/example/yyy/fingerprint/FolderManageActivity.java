@@ -1,18 +1,23 @@
 package com.example.yyy.fingerprint;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -22,6 +27,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +36,8 @@ import com.example.yyy.fingerprint.FolderManage.Authority;
 import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
-import com.example.yyy.fingerprint.LunxunService.Synchro;
-import com.example.yyy.fingerprint.LunxunService.SynchroThread;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +46,7 @@ public class FolderManageActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar2,toolbartop;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    private ListView lv;
+    ListView lv;
 
     FolderManageAdapter arrayAdapter;
 
@@ -52,13 +56,22 @@ public class FolderManageActivity extends AppCompatActivity {
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
 //    private ClientDatabaseHelper mClientDatabaseHelper;
 
+    /* 请求识别码 */
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
+    /* 头像文件 */
+    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
+    // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
+    private static int output_X = 480;
+    private static int output_Y = 480;
+    ImageView imageview;//头像
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wenjianguanli);
+        setContentView(R.layout.activity_foldermanage);
 
-//        mClientDatabaseHelper = ClientDatabaseHelper.getInstance(this);
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -73,21 +86,16 @@ public class FolderManageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        request();
+        lv = (ListView)findViewById(R.id.folderlistview);
+        arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
+        lv.setAdapter(arrayAdapter);
+        //setListViewHeightBasedOnChildren(lv);
 
         toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar2);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.changeAccount);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               Intent intent = new Intent(FolderManageActivity.this,LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         settoolbar();//工具栏
+
+        request();
 
 
         //侧滑栏
@@ -129,6 +137,14 @@ public class FolderManageActivity extends AppCompatActivity {
 
         SharedPreferences userSettings= getSharedPreferences("settingid", 0);
         LinearLayout layout = (LinearLayout)navigationView.inflateHeaderView(R.layout.nav_header_main);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changheadportrait();
+            }
+        });
+
+
         if (userSettings!=null){
             String name = userSettings.getString("userid","默认值");
             //注意每个activity的navigationView是不一样的
@@ -137,20 +153,10 @@ public class FolderManageActivity extends AppCompatActivity {
         }
         //取图片
         Bitmap bitmap = SharedPreferUtils.getBitmap(this, "pic", BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-        ImageView imageview = (ImageView)layout.findViewById(R.id.imageView);
+        imageview = (ImageView)layout.findViewById(R.id.imageView);
         if(bitmap!=null)
             imageview.setImageBitmap(bitmap);
 
-
-        //listview
-        lv = (ListView)findViewById(R.id.ziliaolistview);
-        arrayAdapter = new FolderManageAdapter(this,R.layout.wenjianguanli_item,strs);
-        //lv.setAdapter(arrayAdapter);
-
-//        SharedPreferences userSettings= getSharedPreferences("settingid", 0);
-//        String name = userSettings.getString("userid","默认值");
-//        TextView headernameText = (TextView)findViewById(R.id.headerNameText);
-//        headernameText.setText(name);
     }
 
     @Override
@@ -158,14 +164,16 @@ public class FolderManageActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         //Toolbar 必须在onCreate()之后设置标题文本，否则默认标签将覆盖我们的设置
         if (toolbar2 != null) {
+
             toolbar2.setTitle("所管理文件");
+            //toolbar2.setTitleTextColor(Color.parseColor("#c86d6d"));
             //toolbar.setSubtitle("微信安全支付");
         }
     }
 
     public void settoolbar(){
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbartop = (Toolbar) findViewById(R.id.toolbar1);
+        toolbartop = (Toolbar) findViewById(R.id.toolbar);
         //声明后，用setSupportActionBar 设定，Toolbar即能取代原本的 actionbar 了
         setSupportActionBar(toolbartop);
         toolbartop.setLogo(R.drawable.key);//设置app logo
@@ -173,18 +181,6 @@ public class FolderManageActivity extends AppCompatActivity {
         toolbartop.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
 //        toolbar.setTitleTextAppearance(this,"30sp");//修改标题的字体大小
         //getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-
-        toolbartop.inflateMenu(R.menu.base_toolbar_menu);//设置右上角的填充菜单
-        toolbartop.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int menuItemId = item.getItemId();
-                if (menuItemId == R.id.action_search) {
-                    Toast.makeText(FolderManageActivity.this , "点击了搜索按钮" , Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -206,26 +202,64 @@ public class FolderManageActivity extends AppCompatActivity {
         }
     }
 
+//
+//    public static void setListViewHeightBasedOnChildren(ListView listView) {
+//        //获取ListView对应的Adapter
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null) {
+//            // pre-condition
+//            return;
+//        }
+//
+//        int totalHeight = 0;
+//        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {   //listAdapter.getCount()返回数据项的数目
+//            View listItem = listAdapter.getView(i, null, listView);
+//            listItem.measure(0, 0);  //计算子项View 的宽高
+//            totalHeight += listItem.getMeasuredHeight();  //统计所有子项的总高度
+//        }
+//
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        //listView.getDividerHeight()获取子项间分隔符占用的高度
+//        //params.height最后得到整个ListView完整显示需要的高度
+//        Log.e("FolderManageActivity",params.height+"");
+//
+//        listView.setLayoutParams(params);
+//
+//        Log.e("FolderManageActivity",listView.getHeight()+"");
+//        Log.e("FolderManageActivity",params.height+"");
+//    }
 
-    void setListViewHeight() {
-
-        //设置listview高度
-        int totalHeight = 0;
-        for (int i = 0, len = arrayAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = arrayAdapter.getView(i, null, lv);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-// 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
         }
-        ViewGroup.LayoutParams params = lv.getLayoutParams();
-        params.height = totalHeight + (lv.getDividerHeight() *
-                (arrayAdapter.getCount()+1));
-// listView.getDividerHeight()获取子项间分隔符占用的高度
-// params.height最后得到整个ListView完整显示需要的高度
-        lv.setLayoutParams(params);
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) { // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            //listItem.measure( View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1 );
+        listView.setLayoutParams(params);
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+
+        //listView.setLayoutParams(params);
+        //LinearLayout layout = (LinearLayout)findViewById(R.id.customLayout);
+        //listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,height));
+
+//        layout.updateViewLayout(listView, params);
+//        listView.requestLayout();
     }
+
+
 
     public void request() {
         new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, FolderManageActivity.this).start();
@@ -242,14 +276,160 @@ public class FolderManageActivity extends AppCompatActivity {
                         Authority Authority1 = synchros.get(i);
                         strs.add(new String[]{Authority1.getFile_path(),Authority1.getGuid()});
                     }
-                    arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
-                    lv.setAdapter(arrayAdapter);
-                    setListViewHeight();
+
                     arrayAdapter.notifyDataSetChanged();
+                    setListViewHeightBasedOnChildren(lv);
+//                    lv.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+////                            lv.setLayoutParams(new android.support.v4.widget.NestedScrollView.LayoutParams(android.support.v4.widget.NestedScrollView.LayoutParams.MATCH_PARENT, android.support.v4.widget.NestedScrollView.LayoutParams.MATCH_PARENT));
+//                            lv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+//                            setListViewHeightBasedOnChildren(lv);
+// }
+//                    });
 
                     break;
             }
 
         }
     };
+
+
+    /**
+     * 提取保存裁剪之后的图片数据，并设置头像部分的View
+     */
+    private void setImageToHeadView(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+
+            imageview.setImageBitmap(photo);
+
+            // 存图片
+            SharedPreferUtils.putBitmap(this, "pic", photo);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+        // 用户没有进行有效的设置操作，返回
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        switch (requestCode) {
+            case CODE_GALLERY_REQUEST:
+                cropRawPhoto(intent.getData());
+                break;
+
+            case CODE_CAMERA_REQUEST:
+                if (hasSdcard()) {
+                    File tempFile = new File(
+                            Environment.getExternalStorageDirectory(),
+                            IMAGE_FILE_NAME);
+                    cropRawPhoto(Uri.fromFile(tempFile));
+                } else {
+                    Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                break;
+
+            case CODE_RESULT_REQUEST:
+                if (intent != null) {
+                    setImageToHeadView(intent);
+                }
+
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    /**
+     * 裁剪原始的图片
+     */
+    public void cropRawPhoto(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+
+        // aspectX , aspectY :宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        // outputX , outputY : 裁剪图片宽高
+        intent.putExtra("outputX", output_X);
+        intent.putExtra("outputY", output_Y);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, CODE_RESULT_REQUEST);
+    }
+
+
+    /**
+     * 检查设备是否存在SDCard的工具方法
+     */
+    public static boolean hasSdcard() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            // 有存储的SDCard
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    public void changheadportrait() {
+        /* @setIcon 设置对话框图标
+                 * @setTitle 设置对话框标题
+                 * @setMessage 设置对话框消息提示
+                 * setXXX方法返回Dialog对象，因此可以链式设置属性
+                 */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(FolderManageActivity.this);
+//                        normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("更换头像");
+        normalDialog.setMessage("选择方式");
+        normalDialog.setPositiveButton("本地相册选取头像",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 从本地相册选取图片作为头像
+
+                        Intent intentFromGallery = new Intent();
+                        // 设置文件类型
+                        intentFromGallery.setType("image/*");
+                        intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+                    }
+                });
+        normalDialog.setNegativeButton("手机拍照选取头像",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                        // 判断存储卡是否可用，存储照片文件
+                        if (hasSdcard()) {
+                            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                                    .fromFile(new File(Environment
+                                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        }
+
+                        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+                    }
+                });
+        // 显示
+        normalDialog.show();
+    }
+
 }

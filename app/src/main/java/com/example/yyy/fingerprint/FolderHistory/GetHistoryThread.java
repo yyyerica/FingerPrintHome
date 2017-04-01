@@ -31,7 +31,7 @@ public class GetHistoryThread extends Thread {
     private CalendarFragment fragment;
     private String date;
 
-    public GetHistoryThread(String user_id, String IMEI, String date, String url, CalendarFragment fragment){
+    public GetHistoryThread(String user_id, String IMEI, String date, String url, CalendarFragment fragment) {
         this.user_id = user_id;
         this.IMEI = IMEI;
         this.date = date;
@@ -80,22 +80,24 @@ public class GetHistoryThread extends Thread {
             Log.d("response", response);
             List<History> histories = new ArrayList<>();
             String[] sourceStrArray = response.split("&");
-            Log.d("length", sourceStrArray.length+"");
-            for (int i = 0; i < sourceStrArray.length; i+=6) {
-                String guid = sourceStrArray[i].split("=")[1];
-                Log.d("guid", guid);
-                String file_path = sourceStrArray[i+1].split("=")[1];
-                Log.d("file_path", file_path);
-                String authority_number = sourceStrArray[i+2].split("=")[1];
-                Log.d("authority_number", authority_number);
-                String operate_time = sourceStrArray[i+3].split("=")[1];
-                Log.d("operate_time", operate_time);
-                String isPermit = sourceStrArray[i+4].split("=")[1];
-                Log.d("isPermit", isPermit);
-                String isCheck = sourceStrArray[i+5].split("=")[1];
-                Log.d("isCheck", isCheck);
-                History history = new History(guid, file_path, authority_number, operate_time, isPermit, isCheck);
-                histories.add(history);
+            Log.d("length", sourceStrArray.length + "");
+            if (sourceStrArray.length > 1) {
+                for (int i = 0; i < sourceStrArray.length; i += 6) {
+                    String guid = sourceStrArray[i].split("=")[1];
+                    Log.d("guid", guid);
+                    String file_path = sourceStrArray[i + 1].split("=")[1];
+                    Log.d("file_path", file_path);
+                    String authority_number = sourceStrArray[i + 2].split("=")[1];
+                    Log.d("authority_number", authority_number);
+                    String operate_time = sourceStrArray[i + 3].split("=")[1];
+                    Log.d("operate_time", operate_time);
+                    String isPermit = sourceStrArray[i + 4].split("=")[1];
+                    Log.d("isPermit", isPermit);
+                    String isCheck = sourceStrArray[i + 5].split("=")[1];
+                    Log.d("isCheck", isCheck);
+                    History history = new History(guid, file_path, authority_number, operate_time, isPermit, isCheck);
+                    histories.add(history);
+                }
             }
 
             Message message = new Message();

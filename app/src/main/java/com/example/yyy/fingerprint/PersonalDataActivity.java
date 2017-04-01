@@ -35,8 +35,8 @@ import android.widget.Toast;
 
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
-import com.example.yyy.fingerprint.LunxunService.Synchro;
-import com.example.yyy.fingerprint.LunxunService.SynchroThread;
+import com.example.yyy.fingerprint.RequestService.Synchro;
+import com.example.yyy.fingerprint.RequestService.SynchroThread;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,6 +71,8 @@ public class PersonalDataActivity extends AppCompatActivity {
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 480;
     private static int output_Y = 480;
+
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +145,16 @@ public class PersonalDataActivity extends AppCompatActivity {
 
 
         SharedPreferences userSettings= getSharedPreferences("settingid", 0);
-        LinearLayout layout = (LinearLayout)navigationView.inflateHeaderView(R.layout.nav_header_main);
+        layout = (LinearLayout)navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changheadportrait();
+            }
+        });
+
+
         if (userSettings!=null){
             name = userSettings.getString("userid","默认值");
             //注意每个activity的navigationView是不一样的
@@ -171,13 +182,13 @@ public class PersonalDataActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
-                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDataActivity.this,4);
-                        builder.setTitle("更改用户名").
-                                setIcon(android.R.drawable.ic_dialog_info).
-                                setView(new EditText(PersonalDataActivity.this)).setPositiveButton("确定", null).
-                                setNegativeButton("取消", null).show();
-                        break;
+//                    case 0:
+//                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDataActivity.this,4);
+//                        builder.setTitle("更改用户名").
+//                                setIcon(android.R.drawable.ic_dialog_info).
+//                                setView(new EditText(PersonalDataActivity.this)).setPositiveButton("确定", null).
+//                                setNegativeButton("取消", null).show();
+//                        break;
                     case 1:
                         Intent intent = new Intent(PersonalDataActivity.this,ClientSettingActivity.class);
                         startActivity(intent);
@@ -273,29 +284,6 @@ public class PersonalDataActivity extends AppCompatActivity {
     };
 
 
-
-    /**
-     * 提取保存裁剪之后的图片数据，并设置头像部分的View
-     */
-    private void setImageToHeadView(Intent intent) {
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-
-//            tempHashMap = new HashMap<String, Object>();
-//            tempHashMap.put("image", photo);
-//            headportraitarrayList.clear();
-//            headportraitarrayList.add(tempHashMap);
-//            adapter.notifyDataSetChanged();
-            headImageView.setImageBitmap(photo);
-
-            // 存图片
-            SharedPreferUtils.putBitmap(this, "pic", photo);
-        }
-    }
-
-
-
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -332,7 +320,27 @@ public class PersonalDataActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    /**
+     * 提取保存裁剪之后的图片数据，并设置头像部分的View
+     */
+    private void setImageToHeadView(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
 
+//            tempHashMap = new HashMap<String, Object>();
+//            tempHashMap.put("image", photo);
+//            headportraitarrayList.clear();
+//            headportraitarrayList.add(tempHashMap);
+//            adapter.notifyDataSetChanged();
+            headImageView.setImageBitmap(photo);
+            ImageView leftimageview = (ImageView)layout.findViewById(R.id.imageView);
+            leftimageview.setImageBitmap(photo);
+
+            // 存图片
+            SharedPreferUtils.putBitmap(this, "pic", photo);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -455,4 +463,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                         // 显示
                         normalDialog.show();
     }
+
+
 }

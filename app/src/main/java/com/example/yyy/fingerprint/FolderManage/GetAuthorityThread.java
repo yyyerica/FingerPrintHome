@@ -106,29 +106,30 @@ public class GetAuthorityThread extends Thread {
             response = PostThread.decrypt(response);
             Log.d("response", response);
             String[] sourceStrArray = response.split("&");
-            Log.d("length", sourceStrArray.length+"");
+            Log.d("length", sourceStrArray.length + "");
             List<Authority> authorities = new ArrayList<>();
-            for (int i = 0; i < sourceStrArray.length; i+=3) {
-                String guid = sourceStrArray[i].split("=")[1];
-                Log.d("guid", guid);
-                String file_path = sourceStrArray[i+1].split("=")[1];
-                Log.d("file_path", file_path);
-                String authority_number = sourceStrArray[i+2].split("=")[1];
-                Log.d("authority_number", authority_number);
-                Authority authority = new Authority(guid, file_path, authority_number);
-                authorities.add(authority);
-                //mClientDatabaseHelper.insertAuthority(authority);
+            if (sourceStrArray.length > 1) {
+                for (int i = 0; i < sourceStrArray.length; i += 3) {
+                    String guid = sourceStrArray[i].split("=")[1];
+                    Log.d("guid", guid);
+                    String file_path = sourceStrArray[i + 1].split("=")[1];
+                    Log.d("file_path", file_path);
+                    String authority_number = sourceStrArray[i + 2].split("=")[1];
+                    Log.d("authority_number", authority_number);
+                    Authority authority = new Authority(guid, file_path, authority_number);
+                    authorities.add(authority);
+                    //mClientDatabaseHelper.insertAuthority(authority);
+                }
             }
-
 
             Message message = new Message();
             message.arg1 = 1;
             message.obj = authorities;
-            if (folderManageActivity !=null)
+            if (folderManageActivity != null)
                 folderManageActivity.handler.sendMessage(message);
-            else if(fragment!=null)
+            else if (fragment != null)
                 fragment.handler.sendMessage(message);
-            else if(ClientSettingActivity !=null)
+            else if (ClientSettingActivity != null)
                 ClientSettingActivity.handler.sendMessage(message);
 
 

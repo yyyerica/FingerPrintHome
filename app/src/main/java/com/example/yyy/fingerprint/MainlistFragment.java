@@ -22,17 +22,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
-import com.example.yyy.fingerprint.LunxunService.Synchro;
-import com.example.yyy.fingerprint.LunxunService.SynchroThread;
-import com.example.yyy.fingerprint.LunxunService.VerifyThread;
+import com.example.yyy.fingerprint.RequestService.Synchro;
+import com.example.yyy.fingerprint.RequestService.SynchroThread;
+import com.example.yyy.fingerprint.RequestService.VerifyThread;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 
@@ -48,6 +50,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
 
     private SlideCutListView lv;
+    FrameLayout frameLayout;
     MainListAdapter arrayAdapter;
 
     List<Synchro> synchrosList;
@@ -70,12 +73,13 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
         pi = PendingIntent.getActivity(getActivity(),0,intent,0);
 
         new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,MainlistFragment.this).start();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_bar_main, null);
+
+        frameLayout = (FrameLayout) view.findViewById(R.id.framelayout);
 
         lv = (SlideCutListView) view.findViewById(R.id.listview);
         lv.setRemoveListener(this);
@@ -106,6 +110,8 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 
         manager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) getActivity().getSystemService(Context.KEYGUARD_SERVICE);
+
+
 
         return view;
     }
@@ -169,7 +175,6 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 
 
 
-
     public Handler handler = new Handler(){
     @Override
     public void handleMessage(Message msg) {
@@ -205,6 +210,11 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 //                    lv = (ListView)view.findViewById(R.id.listview);
                 lv.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
+
+                if(strs.size()==0) {
+                    frameLayout.setVisibility(View.VISIBLE);
+                } else frameLayout.setVisibility(View.GONE);
+
                 break;
         }
         }

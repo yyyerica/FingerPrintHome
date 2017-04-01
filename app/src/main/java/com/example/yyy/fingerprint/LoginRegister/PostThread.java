@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.Random;
 
 
 /**
@@ -60,7 +61,7 @@ public class PostThread {
             Log.d("X", X);
             String C = "{\"source\":\"" + source
                     + "\",\"character\":\"" + character + "\"}";
-            String Q = "12345678";
+            String Q = generateString(8);
             String D = client.encryptDES(C, Q);
             String P = client.encryptRSA(Q, Keys.SERVER_PUBLIC_KEY, 1);
             Log.d("P", P);
@@ -69,5 +70,15 @@ public class PostThread {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static String generateString(int length) {
+        final String allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuffer sb = new StringBuffer();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            sb.append(allChar.charAt(random.nextInt(allChar.length())));
+        }
+        return sb.toString();
     }
 }

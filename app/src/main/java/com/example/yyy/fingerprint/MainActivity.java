@@ -1,14 +1,18 @@
 package com.example.yyy.fingerprint;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +21,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,14 +30,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yyy.fingerprint.LunxunService.BootService;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.example.yyy.fingerprint.RequestService.BootService;
 
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager  fragmentManager = getSupportFragmentManager();
 
     String mainlistfragmentTag = "MainListFragmentTag";
+
+// 头像
+    Bitmap bitmap;
+    ImageView imageview;
+    /* 请求识别码 */
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
+    /* 头像文件 */
+    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
+    // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
+    private static int output_X = 480;
+    private static int output_Y = 480;
 
     private BootService.MyBinder myBinder;
     //ServiceConnection匿名类
@@ -187,6 +207,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SharedPreferences userSettings= getSharedPreferences("settingid", 0);
         LinearLayout layout = (LinearLayout)navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changheadportrait();
+            }
+        });
+
         if (userSettings!=null){
             String name = userSettings.getString("userid","默认值");
             //注意每个activity的navigationView是不一样的
@@ -194,8 +222,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             headernametext.setText(name);
         }
         //取图片
-        Bitmap bitmap = SharedPreferUtils.getBitmap(this, "pic", BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-        ImageView imageview = (ImageView)layout.findViewById(R.id.imageView);
+        bitmap = SharedPreferUtils.getBitmap(this, "pic", BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        imageview = (ImageView)layout.findViewById(R.id.imageView);
         if(bitmap!=null)
             imageview.setImageBitmap(bitmap);
 
@@ -252,20 +280,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setLogo(R.drawable.key);//设置app logo
 //        getSupportActionBar().setTitle("setTitle");//设置Toolbar标题
         toolbar.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
-//        toolbar.setTitleTextAppearance(this,"30sp");//修改标题的字体大小
-        //getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-
-        toolbar.inflateMenu(R.menu.base_toolbar_menu);//设置右上角的填充菜单
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int menuItemId = item.getItemId();
-                if (menuItemId == R.id.action_search) {
-                    Toast.makeText(MainActivity.this , "点击了搜索按钮" , Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //创建返回键，并实现打开关/闭监听
@@ -311,9 +325,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imagetop1.setImageResource(R.drawable.homepressed);
                 imagetop2.setImageResource(R.drawable.bellunpressed);
                 imagetop3.setImageResource(R.drawable.messageunpressed);
-//                top1.setBackgroundResource(R.drawable.bg_tab_selector);
-//                top2.setBackgroundColor(Color.parseColor("#ff888888"));
-//                top3.setBackgroundColor(Color.parseColor("#ff888888"));
                 getSupportActionBar().setTitle("请求消息");
                 break;
             case 1:
@@ -321,9 +332,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imagetop1.setImageResource(R.drawable.homeunpressed);
                 imagetop2.setImageResource(R.drawable.bellpressed);
                 imagetop3.setImageResource(R.drawable.messageunpressed);
-//                top2.setBackgroundResource(R.drawable.bg_tab_selector);
-//                top1.setBackgroundColor(Color.parseColor("#ff888888"));
-//                top3.setBackgroundColor(Color.parseColor("#ff888888"));
                 getSupportActionBar().setTitle("历史操作");
                 break;
             case 2:
@@ -331,32 +339,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imagetop1.setImageResource(R.drawable.homeunpressed);
                 imagetop2.setImageResource(R.drawable.bellunpressed);
                 imagetop3.setImageResource(R.drawable.messagepressed);
-
-//                top3.setBackgroundResource(R.drawable.bg_tab_selector);
-//                top2.setBackgroundColor(Color.parseColor("#ff888888"));
-//                top1.setBackgroundColor(Color.parseColor("#ff888888"));
                 getSupportActionBar().setTitle("管理目录");
                 break;
 
         }
     }
 
-//    public void setBackgroundcolor() {
-//        switch (myViewPager.getCurrentItem()) {
-//            case 0:
-//                //topmenu.setBackgroundResource(R.drawable.homebar_header);
-//                backgroundlayout.setBackgroundColor(Color.parseColor("#d9d3bb"));
-//                break;
-//            case 1:
-//                //topmenu.setBackgroundResource(R.drawable.messagebar_header);
-//                backgroundlayout.setBackgroundColor(Color.parseColor("#804d76"));
-//                break;
-//            case 2:
-//                //topmenu.setBackgroundResource(R.drawable.chatbar_header);
-//                backgroundlayout.setBackgroundColor(Color.parseColor("#68d7c4"));
-//                break;
-//        }
-//    }
 
     @Override
     public void onClick(View v) {
@@ -371,5 +359,184 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 myViewPager.setCurrentItem(2);
                 break;
         }
+    }
+/////////////////////////////////////////////////////////////头像
+    /**
+     * 提取保存裁剪之后的图片数据，并设置头像部分的View
+     */
+    private void setImageToHeadView(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+
+            imageview.setImageBitmap(photo);
+
+            // 存图片
+            SharedPreferUtils.putBitmap(this, "pic", photo);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+        // 用户没有进行有效的设置操作，返回
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        switch (requestCode) {
+            case CODE_GALLERY_REQUEST:
+                cropRawPhoto(intent.getData());
+                break;
+
+            case CODE_CAMERA_REQUEST:
+                if (hasSdcard()) {
+                    File tempFile = new File(
+                            Environment.getExternalStorageDirectory(),
+                            IMAGE_FILE_NAME);
+                    cropRawPhoto(Uri.fromFile(tempFile));
+                } else {
+                    Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                break;
+
+            case CODE_RESULT_REQUEST:
+                if (intent != null) {
+                    setImageToHeadView(intent);
+                }
+
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    /**
+     * 裁剪原始的图片
+     */
+    public void cropRawPhoto(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+
+        // aspectX , aspectY :宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        // outputX , outputY : 裁剪图片宽高
+        intent.putExtra("outputX", output_X);
+        intent.putExtra("outputY", output_Y);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, CODE_RESULT_REQUEST);
+    }
+
+
+    /**
+     * 检查设备是否存在SDCard的工具方法
+     */
+    public static boolean hasSdcard() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            // 有存储的SDCard
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    public void changheadportrait() {
+        /* @setIcon 设置对话框图标
+                 * @setTitle 设置对话框标题
+                 * @setMessage 设置对话框消息提示
+                 * setXXX方法返回Dialog对象，因此可以链式设置属性
+                 */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+//                        normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("更换头像");
+        normalDialog.setMessage("选择方式");
+        normalDialog.setPositiveButton("本地相册选取头像",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 从本地相册选取图片作为头像
+
+                        Intent intentFromGallery = new Intent();
+                        // 设置文件类型
+                        intentFromGallery.setType("image/*");
+                        intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+                    }
+                });
+        normalDialog.setNegativeButton("手机拍照选取头像",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                        // 判断存储卡是否可用，存储照片文件
+                        if (hasSdcard()) {
+                            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                                    .fromFile(new File(Environment
+                                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        }
+
+                        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+                    }
+                });
+// 显示
+        normalDialog.show();
+
+//        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+//        alertDialog.show();
+//        Window win = alertDialog.getWindow();
+//        //设置自定义的对话框布局
+//        win.setContentView(R.layout.alertdialog_layout);
+//
+//        ImageButton game_btn = (ImageButton)win.findViewById(R.id.camera);
+//        game_btn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                // 判断存储卡是否可用，存储照片文件
+//                if (hasSdcard()) {
+//                    intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+//                            .fromFile(new File(Environment
+//                                    .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+//                }
+//
+//                startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+//            }
+//        });
+//
+//        ImageButton browser_btn = (ImageButton)win.findViewById(R.id.album);
+//        browser_btn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+// //从本地相册选取图片作为头像
+//
+//                        Intent intentFromGallery = new Intent();
+//                        // 设置文件类型
+//                        intentFromGallery.setType("image/*");
+//                        intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+//                        startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+//            }
+//        });
+
+
+
     }
 }

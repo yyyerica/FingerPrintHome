@@ -16,42 +16,48 @@
     <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/icon_fingerprint"
         android:label="e-Locker"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    </activity>
+        <activity android:name=".MainActivity">
 
-        <service android:name=".LunxunService.BootService" />
+        </activity>
+
+        <activity
+            android:name=".FolderManageActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            </activity>
+        <activity
+            android:name=".PersonalDataActivity"
+            android:label="@string/title_activity_gerenziliao" />
+        <activity android:name=".ClientSettingActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".HelpActivity" />
+
+        <service android:name=".RequestService.BootService" />
         <!-- 静态注册广播接收器可以让程序在未启动的情况下就能接收广播 -->
-        <receiver android:name=".LunxunService.BootBroadcastReceiver">
+        <receiver android:name=".RequestService.BootBroadcastReceiver">
             <intent-filter>
                 在AndroidManifest.xml中注册广播接收器，并设置action为android.intent.action.BOOT_COMPLETED，这样项目就能监听开机事件。
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".FolderManageActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".PersonalDataActivity"
-            android:label="@string/title_activity_gerenziliao" />
-        <activity android:name=".ClientSettingActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HelpActivity"></activity>
+
     </application>
 
 </manifest>

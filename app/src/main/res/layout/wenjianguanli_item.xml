@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/shapefile">
 
-    <ImageView
-        style="@style/layout_horizontal"
-        android:layout_weight="1"
-        android:src="@drawable/foldericon"
-        android:layout_gravity="center"
-        android:layout_marginLeft="15dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        style="@style/layout_horizontal"
-        android:layout_weight="5"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ziliaonameText"
-            android:textSize="30sp"
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ziliaoaddressText"
-            android:textSize="10sp"
-            android:layout_gravity="center"/>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/lotus"-->
+            <!--android:layout_gravity="right|bottom"-->
+            <!--android:padding="3dp"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                style="@style/layout_horizontal"
+                android:layout_weight="1"
+                android:src="@drawable/folder"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+            <LinearLayout
+                style="@style/layout_horizontal"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-    </LinearLayout>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ziliaonameText"
+                    android:textSize="25sp"
+                    android:layout_gravity="left"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ziliaoaddressText"
+                    android:textSize="13sp"
+                    android:layout_gravity="left"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

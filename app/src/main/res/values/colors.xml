@@ -8,4 +8,6 @@
     <color name="hint_color">#42000000</color>
     <color name="success_color">#009688</color>
     <color name="gray">#ff888888</color>
+
+    <color name="primary_text">#c86d6d</color>
 </resources>

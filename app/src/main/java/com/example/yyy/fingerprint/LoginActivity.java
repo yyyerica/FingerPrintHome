@@ -44,6 +44,7 @@ import android.widget.TextView;
 
 import com.example.yyy.fingerprint.LoginRegister.*;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,13 +62,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication 假身份验证 store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "yyy:yyyyyy", "aaa:aaaaaa" //冒号前为账户，冒号后为密码
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -126,6 +120,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+
             }
         });
 
@@ -142,8 +137,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 //进入注册界面按钮
                 String url = AddressUtil.LOGIN_URL;
 
-                Log.e("IMEI",Keys.IMEI);
-                Log.e("url",url);
                 new GetIdThread(Keys.IMEI, url).start();
 
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -208,6 +201,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             return;
         }
 
+
         // Reset errors.
         mAccountView.setError(null);
         mPasswordView.setError(null);
@@ -220,18 +214,18 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError("密码长度不足！");
-            focusView = mPasswordView;
-            cancel = true;
-        }
+//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+//            mPasswordView.setError("密码长度不足！");
+//            focusView = mPasswordView;
+//            cancel = true;
+//        }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(account)) {
-            mAccountView.setError("账号为空！");
-            focusView = mAccountView;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(account)) {
+//            mAccountView.setError("账号为空！");
+//            focusView = mAccountView;
+//            cancel = true;
+//        }
 //        else if (!isEmailValid(account)) {
 //            mAccountView.setError("账号格式不正确");
 //            focusView = mAccountView;
@@ -248,7 +242,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(true);
             String url = AddressUtil.LOGIN_URL;
             String id = Keys.USER_ID;
-            mAuthTask = new LoginThread(id, account, password, Keys.IMEI, url, loginactivity);
+           // mAuthTask = new LoginThread(id, account, password, Keys.IMEI, url, loginactivity);
+
+            //三个被注释的地方！！！
+            mAuthTask = new LoginThread(id, "yyy", "yyyyy", Keys.IMEI, url, loginactivity);
             mAuthTask.start();
         }
     }
@@ -271,6 +268,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
+        TextView logintext = (TextView)findViewById(R.id.loginText);
+        logintext.setVisibility(View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -364,7 +363,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                 Keys.IMEI = TelephonyMgr.getDeviceId();
                 mClientDatabaseHelper.insertKeys("IMEI", Keys.IMEI);
-                Log.d("IMEI: ", Keys.IMEI);
             }
         } else {
             Keys.IMEI = mClientDatabaseHelper.getValue("IMEI");
@@ -406,78 +404,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
             Keys.IMEI = TelephonyMgr.getDeviceId();
             mClientDatabaseHelper.insertKeys("IMEI", Keys.IMEI);
-            Log.d("IMEI: ", Keys.IMEI);
+
         }
     }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-//    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> { //p349
-//
-//        private final String mEmail;
-//        private final String mPassword;
-//
-//        UserLoginTask(String email, String password) {
-//            mEmail = email;
-//            mPassword = password;
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Void... params) { //这个方法中所有代码会在子线程中运行，在这里处理所有耗时任务，任务一旦完成return返回执行结果
-//            //这个方法中不能进行UI操作，如需更新UI元素，如反馈当前任务执行进度，调用publishProgress(Progress)方法完成
-//            // TODO: attempt authentication against a network service.
-//
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
-//            //检测账号密码
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                } else return false;
-//            }
-//
-//            // TODO: register the new account here.
-//            return true;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(final Boolean success) { //当后台任务执行完毕并通过return返回时，该方法被调用，根据返回的数据进行UI操作
-//            mAuthTask = null;
-//            showProgress(false);
-//
-//            if (success) {
-//                //自己加上去的推送服务
-//                Intent startIntent = new Intent(LoginActivity.this,BootService.class);
-//                bindService(startIntent, connection, BIND_AUTO_CREATE);
-//                //绑定服务，BIND_AUTO_CREATE表示在活动和服务进行绑定后自动创建服务，使服务中的onCreate()方法得到执行，但onStartCommand()方法不会执行
-//                startService(startIntent);
-//
-//
-//                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } else {
-//                mPasswordView.setError("账号或密码不符！");
-//                mPasswordView.requestFocus();
-//            }
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            mAuthTask = null;
-//            showProgress(false);
-//        }
-//    }
-
 
     public Handler handler = new Handler() {
         @Override
@@ -500,6 +429,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
                 case 0: //登录失败
                     showProgress(false);
+                    mAuthTask = null;
                     EditText mPasswordView = (EditText)findViewById(R.id.password);
                     mPasswordView.setError("账号或密码不符！");
                     mPasswordView.requestFocus();

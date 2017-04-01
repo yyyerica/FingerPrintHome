@@ -53,9 +53,6 @@ public class ThirdFragment extends Fragment {
 
         //随便一堆测试数据
         group_list = new ArrayList<String>();
-//        group_list.add("A");//大项1
-//        group_list.add("B");
-//        group_list.add("C");
 
         item_list = new ArrayList<List<String>>();
 //        item_list.add(group_list);//小项group1
@@ -202,7 +199,7 @@ public class ThirdFragment extends Fragment {
 //            itemHolder.img.setBackgroundResource(item_list2.get(groupPosition).get(
 //                    childPosition));
 
-            itemHolder.img.setBackgroundResource(R.drawable.keyedi);//子项背景
+            //itemHolder.img.setBackgroundResource(R.drawable.keyedi);//子项背景
             return convertView;
         }
 

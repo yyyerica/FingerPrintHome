@@ -9,13 +9,14 @@
         android:orientation="horizontal"
         android:layout_weight="1"
         android:id="@+id/topmenu"
-        android:background="#ff888888">
+        >
+        <!--android:background="#ff888888"-->
         <LinearLayout
             style="@style/layout_horizontal"
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/toplayout1"
-            android:background="@null">
+            android:background="#a9d7e2">
             <ImageView
                 android:src="@drawable/homeunpressed"
                 android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/toplayout2"
-            android:background="@null">
+            android:background="#f7a6a8">
             <ImageView
                 android:src="@drawable/bellunpressed"
                 android:layout_height="wrap_content"
@@ -43,7 +44,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/toplayout3"
-            android:background="@null">
+            android:background="#fcecc6">
             <ImageView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

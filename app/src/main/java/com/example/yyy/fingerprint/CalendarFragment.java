@@ -143,8 +143,8 @@ public class CalendarFragment extends Fragment {
                 .findViewById(R.id.popupwindow_calendar_next_month);
         popupwindow_calendar_next_month
                 .setOnClickListener(new View.OnClickListener() {
-
                     public void onClick(View v) {
+                        Log.e("CalendarFragment","calendar.nextMonth();");
                         calendar.nextMonth();
                     }
                 });
@@ -216,8 +216,9 @@ public class CalendarFragment extends Fragment {
                     List<History> histories = (List<History>)msg.obj;
                     for(int i=0;i<histories.size();i++) {
                         History history = histories.get(i);
-                        strs.add(new String[]{history.getFile_path(),history.getOperate_time(),"客户端 : "+history.getGuid()});
-                        Log.e("getFile_path",history.getFile_path());
+//                        strs.add(new String[]{history.getFile_path(),history.getOperate_time(),"客户端 : "+history.getGuid()});
+                        strs.add(new String[]{history.getFile_path(),history.getOperate_time()});
+                        //Log.e("getFile_path",history.getFile_path());
                     }
                     lv.setAdapter(arrayAdapter);
                     arrayAdapter.notifyDataSetChanged();
