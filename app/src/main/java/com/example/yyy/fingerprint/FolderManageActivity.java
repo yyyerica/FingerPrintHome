@@ -41,6 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FolderManageActivity extends AppCompatActivity {
 
     NavigationView navigationView;
@@ -50,7 +51,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
     FolderManageAdapter arrayAdapter;
 
-//    String[] arr1 = {"dota","c://bbb"};
+    //    String[] arr1 = {"dota","c://bbb"};
 //    String[] arr2 = {"lol","d:ccc"};
 //    ArrayList<String[]> strs = new ArrayList<String[]>(){{add(arr1);add(arr1);add(arr1);add(arr2);add(arr1);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);}};
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
@@ -87,6 +88,7 @@ public class FolderManageActivity extends AppCompatActivity {
         }
 
         lv = (ListView)findViewById(R.id.folderlistview);
+        //for (int i = 0;i<10;i++) strs.add(new String[]{"123123","123123123"});
         arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
         lv.setAdapter(arrayAdapter);
         //setListViewHeightBasedOnChildren(lv);

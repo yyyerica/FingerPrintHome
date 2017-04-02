@@ -10,7 +10,7 @@ public class Synchro {
     private String authority_number;
     private String operate_date;
     private String operate_time;
-    private String isPermit;//过来的都是No，改为yes返回
+    private String isPermit;//过来的都是No，改为yes返回//是否允许
     private String isSend;
 
     public Synchro(String guid, String file_path, String authority_number, String operate_date, String operate_time, String isPermit,String isSend) {

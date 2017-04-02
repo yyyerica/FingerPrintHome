@@ -80,7 +80,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_gerenziliao);
 
-        new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,PersonalDataActivity.this).start();
+        //new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,PersonalDataActivity.this).start();
 
         headImageView = (ImageView)findViewById(R.id.headportraitImageView);
         relativeLayout = (RelativeLayout)findViewById(R.id.headportraitlayout);
@@ -261,27 +261,27 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     }
 
-    public Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.arg1) {
-                case 1:
-                    List<Synchro> synchros = (List<Synchro>) msg.obj;
-
-                    for(int i = 0 ; i < synchros.size(); i++) {
-                        Synchro synchros1 = synchros.get(i);
-                        arr2[1]+=synchros1.getGuid();
-                        if(i<synchros.size()-1)
-                            arr2[1]+="\n";
-                    }
-
-                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    break;
-            }
-        }
-    };
+//    public Handler handler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.arg1) {
+//                case 1:
+//                    List<Synchro> synchros = (List<Synchro>) msg.obj;
+//
+//                    for(int i = 0 ; i < synchros.size(); i++) {
+//                        Synchro synchros1 = synchros.get(i);
+//                        arr2[1]+=synchros1.getGuid();
+//                        if(i<synchros.size()-1)
+//                            arr2[1]+="\n";
+//                    }
+//
+//                    listView.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//            }
+//        }
+//    };
 
 
     @Override

@@ -2,10 +2,13 @@ package com.example.yyy.fingerprint;
 
 import android.Manifest;
 import android.app.Activity;
+
+import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,8 +37,6 @@ import com.example.yyy.fingerprint.RequestService.VerifyThread;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.Context.FINGERPRINT_SERVICE;
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 public class MainlistFragment extends Fragment implements SlideCutListView.RemoveListener {
@@ -48,6 +49,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 //    String[] arr2 = {"2-14","lol","23:09","guid"};
 //    ArrayList<String[]> strs = new ArrayList<String[]>(){{add(arr1); add(arr1); add(arr1); add(arr1); add(arr1); add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);}};
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
+    ArrayList<String[]> deletestrs = new ArrayList<String[]>(){};
 
     private SlideCutListView lv;
     FrameLayout frameLayout;
@@ -55,11 +57,10 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 
     List<Synchro> synchrosList;
 
-    NotificationManager myNotificationManager;
+
     private final static int NOTIFICATION_ID = 0x0001;
-    Intent intent;
-    PendingIntent pi;
-    Notification notification;
+
+
 
     public static final int REUEST_CODE = 10;
 
@@ -69,8 +70,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
         arrayAdapter = new MainListAdapter(getActivity(),R.layout.mainarray_item,strs);
         //arrayAdapter.setDropDownViewResource();
         me = this;
-        intent = new Intent(getActivity(),MainActivity.class);
-        pi = PendingIntent.getActivity(getActivity(),0,intent,0);
+
 
         new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,MainlistFragment.this).start();
     }
@@ -187,22 +187,31 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
                 boolean isSend = true;
                 for(int i = 0 ; i < synchros.size(); i++) {
                     Synchro synchros1 = synchros.get(i);
-                    strs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
+//                    if(synchros1.getAuthority_number()=="1")//打开
+                        strs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
+//                    else if(synchros1.getAuthority_number()=="0")//删除
+//                        deletestrs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
                     if (synchros1.getIsSend().equals("NO"))
                         isSend = false;
                 }
                 if(synchros.size()>0&&!isSend) {
                         //推送
-                        myNotificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
-                        notification = new Notification.Builder(getActivity()).
-                                setAutoCancel(true).//设置打开该通知，该通知自动消失
-                                setTicker("e-Locker").//设置显示在状态栏的通知提示消息
-                                setSmallIcon(R.drawable.horn).//设置通知的图标
-                                setContentTitle("你有新的请求消息").//设置通知内容的标题
-                                setContentText("点击查看").//设置通知内容
-                                setContentIntent(pi).//设置通知将要启动程序的Intent
-                                build();
-                        myNotificationManager.notify(NOTIFICATION_ID,notification);
+//                    Intent intent;
+//                    PendingIntent pi;
+//                    intent = new Intent(getActivity(),MainActivity.class);
+//                    pi = PendingIntent.getActivity(getActivity(),0,intent,0);
+//                    NotificationManager myNotificationManager;
+//                        myNotificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
+//                    Notification notification;
+//                        notification = new Notification.Builder(getActivity()).
+//                                setAutoCancel(true).//设置打开该通知，该通知自动消失
+//                                setTicker("e-Locker").//设置显示在状态栏的通知提示消息
+//                                setSmallIcon(R.drawable.horn).//设置通知的图标
+//                                setContentTitle("你有新的请求消息").//设置通知内容的标题
+//                                setContentText("点击查看").//设置通知内容
+//                                setContentIntent(pi).//设置通知将要启动程序的Intent
+//                                build();
+//                        myNotificationManager.notify(NOTIFICATION_ID,notification);
                 }
                 Log.e("MainlistFragment","访问中");
 

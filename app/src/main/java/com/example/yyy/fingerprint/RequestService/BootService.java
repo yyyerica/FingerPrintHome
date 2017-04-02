@@ -1,21 +1,31 @@
 package com.example.yyy.fingerprint.RequestService;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
+import android.view.View;
 
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
+import com.example.yyy.fingerprint.MainActivity;
 import com.example.yyy.fingerprint.MainlistFragment;
+import com.example.yyy.fingerprint.R;
+
+import java.util.List;
 
 public class BootService extends Service {
 
-
+    private final static int NOTIFICATION_ID = 0x0001;
 
     public MyBinder mBinder = new MyBinder();
 
@@ -40,10 +50,7 @@ public class BootService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-//        Log.e("Service", "Oncreate");
-//
-
+        Log.e("Service","create");
     }
 
     //onStartCommand()是处理事情的逻辑方法
@@ -90,7 +97,7 @@ public class BootService extends Service {
         SharedPreferences userSettings= getSharedPreferences("isLoginsetting", 0);
         if(userSettings.getBoolean("isLogin",false)){
 
-            new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,fragment).start();
+            new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,fragment,this).start();
 
             //getRun(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL);
 
@@ -168,6 +175,33 @@ public class BootService extends Service {
 //            }
 //        }
 //    }
+    public Handler handler = new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        switch (msg.arg1) {
+            case 1:
+                Log.e("BootService","createNotification");
+                Intent intent;
+                    PendingIntent pi;
+                    intent = new Intent(BootService.this,MainActivity.class);
+                    pi = PendingIntent.getActivity(BootService.this,0,intent,0);
+                    NotificationManager myNotificationManager;
+                        myNotificationManager = (NotificationManager)BootService.this.getSystemService(NOTIFICATION_SERVICE);
+                    Notification notification;
+                        notification = new Notification.Builder(BootService.this).
+                                setAutoCancel(true).//设置打开该通知，该通知自动消失
+                                setTicker("e-Locker").//设置显示在状态栏的通知提示消息
+                                setSmallIcon(R.drawable.horn).//设置通知的图标
+                                setContentTitle("你有新的请求消息").//设置通知内容的标题
+                                setContentText("点击查看").//设置通知内容
+                                setContentIntent(pi).//设置通知将要启动程序的Intent
+                                build();
+                        myNotificationManager.notify(NOTIFICATION_ID,notification);
+
+        }
+    }
+};
 
 
 
@@ -176,7 +210,7 @@ public class BootService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Log.e("Service", "OnDestory");
+        Log.e("Service", "OnDestory");
     }
 
 }

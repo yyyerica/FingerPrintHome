@@ -31,14 +31,14 @@
             android:fitsSystemWindows="true"
             tools:context="com.example.yyy.fingerprint.FolderManageActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            android:fitsSystemWindows="true"
-            android:background="@drawable/businesscards"
-            android:theme="@style/AppTheme.AppBarOverlay">
-            <!--title字体颜色由这里的theme设定-->
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height"
+                android:fitsSystemWindows="true"
+                android:background="@drawable/businesscards"
+                android:theme="@style/AppTheme.AppBarOverlay">
+                <!--title字体颜色由这里的theme设定-->
                 <!--android:theme="@style/ThemeOverlay.MyApp.ActionBar"android:theme="@style/ThemeOverlay.MyApp.ActionBar"-->
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/toolbar_layout"
@@ -73,22 +73,23 @@
                 android:layout_height="match_parent"
                 android:background="#ffffff"
                 android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/parent_list_view"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:orientation="vertical">
 
                     <ListView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
+                        android:layout_height="match_parent"
+                        android:padding="0dp"
                         android:id="@+id/folderlistview"
                         android:divider="@null"
-                        android:dividerHeight="18dp"
+                        android:dividerHeight="10dp"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
                 </LinearLayout>
 

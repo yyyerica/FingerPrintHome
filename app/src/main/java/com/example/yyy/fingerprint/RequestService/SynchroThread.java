@@ -1,15 +1,23 @@
 package com.example.yyy.fingerprint.RequestService;
 
+import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.yyy.fingerprint.ClientSettingActivity;
 import com.example.yyy.fingerprint.FolderManageActivity;
+import com.example.yyy.fingerprint.MainActivity;
 import com.example.yyy.fingerprint.PersonalDataActivity;
 import com.example.yyy.fingerprint.LoginRegister.PostOptions;
 import com.example.yyy.fingerprint.LoginRegister.PostThread;
 import com.example.yyy.fingerprint.MainlistFragment;
+import com.example.yyy.fingerprint.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,23 +30,37 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 
 public class SynchroThread extends Thread {
     private String IMEI;
     private String user_id;
     private String url = "";
-    private MainlistFragment fragment;
+    private MainlistFragment mainlistfragment;
     private PersonalDataActivity personalDataActivity;
     private ClientSettingActivity clientSettingActivity;
     private FolderManageActivity folderManageActivity;
+    private BootService bootService;
 
-
-    public SynchroThread(String user_id, String IMEI, String url, MainlistFragment fragment) {
+//Mainactivity将context设为mainlistfragment,作为bootservice启动该线程的参数，所以由该构造函数启动的线程能让mainlistfragment更改list信息
+    public SynchroThread(String user_id, String IMEI, String url, MainlistFragment mainlistfragment) {
         this.user_id = user_id;
         this.IMEI = IMEI;
         this.url = url;
-        this.fragment = fragment;
+        this.mainlistfragment = mainlistfragment;
     }
+
+    public SynchroThread(String user_id, String IMEI, String url, MainlistFragment mainlistfragment,BootService bootService) {
+        this.user_id = user_id;
+        this.IMEI = IMEI;
+        this.url = url;
+        this.mainlistfragment = mainlistfragment;
+        this.bootService = bootService;
+
+        Log.e("SynchroThread","bootservice.create()");
+    }
+
 
     public SynchroThread(String user_id, String IMEI, String url, PersonalDataActivity personalDataActivity) {
         this.user_id = user_id;
@@ -102,6 +124,7 @@ public class SynchroThread extends Thread {
             List<Synchro> synchros = new ArrayList<>();
             String[] sourceStrArray = response.split("&");
             Log.d("length", sourceStrArray.length+"");
+            boolean isSendbool = true;
             if(sourceStrArray.length > 1) {
                 for (int i = 0; i < sourceStrArray.length; i+=7) {
                     String guid = sourceStrArray[i].split("=")[1];
@@ -121,21 +144,36 @@ public class SynchroThread extends Thread {
 
                     Synchro synchro = new Synchro(guid, file_path, authority_number, operate_date, operate_time, isPermit,isSend);
                     synchros.add(synchro);
+                    if (isSend.equals("NO")) {
+                        isSendbool = false;
+                    }
                 }
+
             }
 
             Message message = new Message();
             message.arg1 = 1;
             message.obj = synchros;
-            if (personalDataActivity!=null)
-                personalDataActivity.handler.sendMessage(message);
-            else if(fragment!=null)
-                fragment.handler.sendMessage(message);
+//            if (personalDataActivity!=null)
+//                personalDataActivity.handler.sendMessage(message);
+            if(mainlistfragment!=null){
+                mainlistfragment.handler.sendMessage(message);
+                Log.e("SynchroThread","mainlistfragment!=null");
+            }
             else if (clientSettingActivity!=null)
                 clientSettingActivity.handler.sendMessage(message);
             else if(folderManageActivity!=null)
                 folderManageActivity.handler.sendMessage(message);
 
+
+            Log.e("SynchroThread","isSendbool"+isSendbool+"");
+            Log.e("SynchroThread","synchros.size()"+synchros.size()+"");
+            boolean verify = bootService!=null && synchros.size()>0 && !isSendbool;
+            Log.e("SynchroThread","verify"+verify);
+            if(bootService!=null && synchros.size()>0 && !isSendbool) {
+                bootService.handler.sendMessage(message);
+                Log.e("SynchroThread","bootService");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
