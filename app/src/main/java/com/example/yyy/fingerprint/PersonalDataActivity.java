@@ -201,8 +201,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 //        headportraitListView = (ListView)findViewById(R.id.headportraitListView);
 //        adapter = new SimpleAdapter(this, headportraitarrayList, R.layout.headportrait_item,
 //                new String[]{"image"}, new int[]{R.id.headportraitImageView});

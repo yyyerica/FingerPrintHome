@@ -7,10 +7,21 @@ package com.example.yyy.fingerprint.FolderHistory;
 public class History {
     private String guid;
     private String file_path;
+    private String nickname;
     private String authority_number;//权限
     private String operate_time;
     private String isPermit;
     private String isCheck;
+
+    public History(String guid, String file_path, String nickname, String authority_number, String operate_time, String isPermit, String isCheck) {
+        this.guid = guid;
+        this.file_path = file_path;
+        this.nickname = nickname;
+        this.authority_number = authority_number;
+        this.operate_time = operate_time;
+        this.isPermit = isPermit;
+        this.isCheck = isCheck;
+    }
 
     public History(String guid, String file_path, String authority_number, String operate_time, String isPermit, String isCheck) {
         this.guid = guid;
@@ -19,6 +30,14 @@ public class History {
         this.operate_time = operate_time;
         this.isPermit = isPermit;
         this.isCheck = isCheck;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getGuid() {

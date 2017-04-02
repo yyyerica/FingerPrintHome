@@ -126,23 +126,25 @@ public class SynchroThread extends Thread {
             Log.d("length", sourceStrArray.length+"");
             boolean isSendbool = true;
             if(sourceStrArray.length > 1) {
-                for (int i = 0; i < sourceStrArray.length; i+=7) {
+                for (int i = 0; i < sourceStrArray.length; i+=8) {
                     String guid = sourceStrArray[i].split("=")[1];
                     Log.d("guid", guid);
                     String file_path = sourceStrArray[i+1].split("=")[1];
                     Log.d("file_path", file_path);
-                    String authority_number = sourceStrArray[i+2].split("=")[1];
+                    String nickname = sourceStrArray[i+2].split("=")[1];
+                    Log.d("nickname", nickname);
+                    String authority_number = sourceStrArray[i+3].split("=")[1];
                     Log.d("authority_number", authority_number);
-                    String operate_date = sourceStrArray[i+3].split("=")[1];
+                    String operate_date = sourceStrArray[i+4].split("=")[1];
                     Log.d("operate_date", operate_date);
-                    String operate_time = sourceStrArray[i+4].split("=")[1];
+                    String operate_time = sourceStrArray[i+5].split("=")[1];
                     Log.d("operate_time", operate_time);
-                    String isPermit = sourceStrArray[i+5].split("=")[1];
+                    String isPermit = sourceStrArray[i+6].split("=")[1];
                     Log.d("isPermit", isPermit);
-                    String isSend = sourceStrArray[i+6].split("=")[1];
+                    String isSend = sourceStrArray[i+7].split("=")[1];
                     Log.d("isSend", isSend);
 
-                    Synchro synchro = new Synchro(guid, file_path, authority_number, operate_date, operate_time, isPermit,isSend);
+                    Synchro synchro = new Synchro(guid, file_path, nickname, authority_number, operate_date, operate_time, isPermit,isSend);
                     synchros.add(synchro);
                     if (isSend.equals("NO")) {
                         isSendbool = false;
@@ -170,9 +172,8 @@ public class SynchroThread extends Thread {
             Log.e("SynchroThread","synchros.size()"+synchros.size()+"");
             boolean verify = bootService!=null && synchros.size()>0 && !isSendbool;
             Log.e("SynchroThread","verify"+verify);
-            if(bootService!=null && synchros.size()>0 && !isSendbool) {
-                bootService.handler.sendMessage(message);
-                Log.e("SynchroThread","bootService");
+            if(bootService!=null && synchros.size()>0) {//&& !isSendbool
+                Log.e("SynchroThread","bootService");bootService.handler.sendMessage(message);
             }
         } catch (Exception e) {
             e.printStackTrace();

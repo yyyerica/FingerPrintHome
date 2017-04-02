@@ -11,4 +11,5 @@ public class PostOptions {
     public static final String GETHISTORY = "5";
     public static final String SYNCHRO = "6";
     public static final String VERIFY = "7";
+    public static final String SENDNICKNAME = "8";
 }

@@ -51,7 +51,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
     FolderManageAdapter arrayAdapter;
 
-    //    String[] arr1 = {"dota","c://bbb"};
+//    String[] arr1 = {"dota","c://bbb"};
 //    String[] arr2 = {"lol","d:ccc"};
 //    ArrayList<String[]> strs = new ArrayList<String[]>(){{add(arr1);add(arr1);add(arr1);add(arr2);add(arr1);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);}};
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
@@ -248,7 +248,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
 
-        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1 );
+        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1) +listView.getPaddingBottom()*2 + toolbar2.getHeight();
         listView.setLayoutParams(params);
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
@@ -276,7 +276,9 @@ public class FolderManageActivity extends AppCompatActivity {
                     List<Authority> synchros = (List<Authority>) msg.obj;
                     for(int i = 0;i < synchros.size();i++) {
                         Authority Authority1 = synchros.get(i);
-                        strs.add(new String[]{Authority1.getFile_path(),Authority1.getGuid()});
+                        if(Authority1.getNickname().equals("defaultcomputer")) {
+                            strs.add(new String[]{Authority1.getFile_path(),Authority1.getGuid()});
+                        } else strs.add(new String[]{Authority1.getFile_path(),Authority1.getNickname()});
                     }
 
                     arrayAdapter.notifyDataSetChanged();
@@ -295,6 +297,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
         }
     };
+
 
 
     /**

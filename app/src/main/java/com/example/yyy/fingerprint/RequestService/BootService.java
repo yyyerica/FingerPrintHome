@@ -70,9 +70,7 @@ public class BootService extends Service {
 //
 //        }).start();
 
-
        connect();
-
 
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);//获取到了AlarmManager的实例
         int anMinute = 2*1000;//定义触发时间为5s之后
@@ -178,10 +176,10 @@ public class BootService extends Service {
     public Handler handler = new Handler(){
     @Override
     public void handleMessage(Message msg) {
-        super.handleMessage(msg);
+        super.handleMessage(msg);Log.e("BootService","createNotification");
         switch (msg.arg1) {
             case 1:
-                Log.e("BootService","createNotification");
+
                 Intent intent;
                     PendingIntent pi;
                     intent = new Intent(BootService.this,MainActivity.class);

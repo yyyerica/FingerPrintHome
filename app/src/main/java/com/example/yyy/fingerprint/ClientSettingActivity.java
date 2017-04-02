@@ -20,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import com.example.yyy.fingerprint.FolderManage.Authority;
 import com.example.yyy.fingerprint.FolderManage.GetAuthorityThread;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
+import com.example.yyy.fingerprint.RequestService.NickNameThread;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +68,11 @@ public class ClientSettingActivity extends AppCompatActivity {
     private static int output_X = 480;
     private static int output_Y = 480;
     ImageView imageview;//头像
+    Toolbar toolbar2;
+    String guid;
+    EditText editText;
 
+    List<Authority> authorityLis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +94,7 @@ public class ClientSettingActivity extends AppCompatActivity {
         }
 
 
-
+        toolbar2 = (Toolbar)findViewById(R.id.toolbar2);
         settoolbar();//工具栏
         new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, ClientSettingActivity.this).start();
 
@@ -153,6 +159,7 @@ public class ClientSettingActivity extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.kehuduanshezhiListView);
         listview.setAdapter(arrayAdapter);
 
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -167,13 +174,28 @@ public class ClientSettingActivity extends AppCompatActivity {
 //                        Intent intent = new Intent(ClientSettingActivity.this,ClientSettingActivity.class);
 //                        startActivity(intent);
 //                        break;
+//                }
+
+                if(authorityLis!=null){
+                    guid = authorityLis.get(position).getGuid();
+                }
+
+
+                editText = new EditText(ClientSettingActivity.this);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ClientSettingActivity.this,4);
                 builder.setTitle("更改客户端名称").
                             setIcon(android.R.drawable.ic_dialog_info).
-                            setView(new EditText(ClientSettingActivity.this)).setPositiveButton("确定", null).
-                            setNegativeButton("取消", null).show();
+                            setView(editText).
+                        setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                // TODO Auto-generated method stub
+                                new NickNameThread(Keys.USER_ID, Keys.IMEI, guid, editText.getText().toString(), AddressUtil.LOGIN_URL, ClientSettingActivity.this).start();
+                            }
+                        }).setNegativeButton("取消", null).show();
 
-//                }
+
             }
         });
     }
@@ -181,7 +203,7 @@ public class ClientSettingActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        Toolbar toolbar2 = (Toolbar)findViewById(R.id.toolbar2);
+
         //Toolbar 必须在onCreate()之后设置标题文本，否则默认标签将覆盖我们的设置
         if (toolbar2 != null) {
             toolbar2.setTitle("所管理客户端");
@@ -230,7 +252,7 @@ public class ClientSettingActivity extends AppCompatActivity {
         }
         ViewGroup.LayoutParams params = listview.getLayoutParams();
         params.height = totalHeight + (listview.getDividerHeight() *
-                (arrayAdapter.getCount()-1));
+                (arrayAdapter.getCount() )) + toolbar2.getHeight() + listview.getPaddingBottom()*2 ;
 // listView.getDividerHeight()获取子项间分隔符占用的高度
 // params.height最后得到整个ListView完整显示需要的高度
         listview.setLayoutParams(params);
@@ -242,7 +264,8 @@ public class ClientSettingActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 1:
-                    List<Authority> authorityLis = (List<Authority>) msg.obj;
+                    strs.clear();
+                    authorityLis= (List<Authority>) msg.obj;
                     for(int i = 0;i < authorityLis.size();i++) {
                         Authority authority1 = authorityLis.get(i);
 //                        if(strs.size()==0)
@@ -253,14 +276,22 @@ public class ClientSettingActivity extends AppCompatActivity {
 //                                    strs.add(authority1.getGuid());
 //                            }
 //                        }
-                        if(!contentGuid(strs,authority1)) {//group没有item没有
-                            strs.add(authority1.getGuid());
+                        if(!contentGuid(strs,authority1)){
+                            if(authority1.getNickname().equals("defaultcomputer")) {
+                                strs.add(authority1.getGuid());
+                            } else if(!contentNickName(strs,authority1)) {
+                                strs.add(authority1.getNickname());
+                                Log.e("ClientSettingActivity","name:" + authority1.getNickname());
+                            }
                         }
                     }
-                    setListViewHeight();
+
                     arrayAdapter.notifyDataSetChanged();
 
+                    setListViewHeight();
+                    Log.e("ClientSettingActivity","arg1");
                     break;
+
             }
 
         }
@@ -275,6 +306,14 @@ public class ClientSettingActivity extends AppCompatActivity {
         return false;
     }
 
+    public boolean contentNickName(List a,Authority authority){
+        for (int i=0;i<a.size();i++){
+            if(authority.getNickname().equals(a.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 提取保存裁剪之后的图片数据，并设置头像部分的View

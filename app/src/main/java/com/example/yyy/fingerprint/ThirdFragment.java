@@ -87,19 +87,36 @@ public class ThirdFragment extends Fragment {
                     List<Authority> authorityList = (List<Authority>) msg.obj;
                     for(int i = 0;i < authorityList.size();i++) {
                         Authority authority = authorityList.get(i);
-                        if(!contentGuid(group_list,authority)) {//group没有item没有
-                            group_list.add(authority.getGuid());
-                            ArrayList<String> itemlistitem = new ArrayList<>();
-                            itemlistitem.add(authority.getFile_path());
-                            item_list.add(itemlistitem);
-                        } else { //有group,添加item子项
-                            for (int a=0;a<group_list.size();a++) {
-                                if (group_list.get(a).equals(authority.getGuid())){
-                                    item_list.get(a).add(authority.getFile_path());
-                                }
+                        if(authority.getNickname().equals("defaultcomputer")) {
+                            if(!contentGuid(group_list,authority)) {//group没有item没有
+                                group_list.add(authority.getGuid());
+                                ArrayList<String> itemlistitem = new ArrayList<>();
+                                itemlistitem.add(authority.getFile_path());
+                                item_list.add(itemlistitem);
+                            } else { //有group,添加item子项
+                                for (int a=0;a<group_list.size();a++) {
+                                    if (group_list.get(a).equals(authority.getGuid())){
+                                        item_list.get(a).add(authority.getFile_path());
+                                    }
 
+                                }
+                            }
+                        } else {
+                            if(!contentNickName(group_list,authority)) {//group没有item没有
+                                group_list.add(authority.getNickname());
+                                ArrayList<String> itemlistitem = new ArrayList<>();
+                                itemlistitem.add(authority.getFile_path());
+                                item_list.add(itemlistitem);
+                            } else { //有group,添加item子项
+                                for (int a=0;a<group_list.size();a++) {
+                                    if (group_list.get(a).equals(authority.getNickname())){
+                                        item_list.get(a).add(authority.getFile_path());
+                                    }
+
+                                }
                             }
                         }
+
                     }
                     myExpandableListViewAdapter.notifyDataSetChanged();
                     break;
@@ -111,6 +128,15 @@ public class ThirdFragment extends Fragment {
     public boolean contentGuid(List a,Authority authority){
         for (int i=0;i<a.size();i++){
             if(authority.getGuid().equals(a.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean contentNickName(List a,Authority authority){
+        for (int i=0;i<a.size();i++){
+            if(authority.getNickname().equals(a.get(i))){
                 return true;
             }
         }
