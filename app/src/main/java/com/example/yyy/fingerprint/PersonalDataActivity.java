@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,7 +23,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,14 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
-import com.example.yyy.fingerprint.LoginRegister.Keys;
-import com.example.yyy.fingerprint.RequestService.Synchro;
-import com.example.yyy.fingerprint.RequestService.SynchroThread;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PersonalDataActivity extends AppCompatActivity {
 
@@ -78,7 +69,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_gerenziliao);
+        setContentView(R.layout.activity_personaldata);
 
         //new SynchroThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL,PersonalDataActivity.this).start();
 

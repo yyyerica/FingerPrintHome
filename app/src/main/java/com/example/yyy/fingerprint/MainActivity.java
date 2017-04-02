@@ -228,10 +228,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             imageview.setImageBitmap(bitmap);
 
         //开启轮询服务
-//        Intent startIntent = new Intent(this,BootService.class);
-//        this.bindService(startIntent, connection, BIND_AUTO_CREATE);
-//        //绑定服务，BIND_AUTO_CREATE表示在活动和服务进行绑定后自动创建服务，使服务中的onCreate()方法得到执行，但onStartCommand()方法不会执行
-//        this.startService(startIntent);
+        Intent startIntent = new Intent(this,BootService.class);
+        this.bindService(startIntent, connection, BIND_AUTO_CREATE);
+        //绑定服务，BIND_AUTO_CREATE表示在活动和服务进行绑定后自动创建服务，使服务中的onCreate()方法得到执行，但onStartCommand()方法不会执行
+        this.startService(startIntent);
 
     }
 

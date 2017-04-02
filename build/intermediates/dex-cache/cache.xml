@@ -12,84 +12,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\1341f4f65bce742278d4f3440f41489cbc882117\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_415620aa4a86202250c8850c678712ff7fcd017a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\044ffaa5c4444c65d6a6957b6afd1d99996c7743\output\jars\libs\internal_impl-23.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.4.0_cfb5ba3f6e35942854988e3a82a05b9fe6ae52d3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\1a3f508c02f346e178635d4fbdfc775d588183d5\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_08d6235201440b4353eed200e182fe6b07983f26\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="B:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.4.0_ebc78b4f906425303281217995ea315d4bc18430\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\2d320b3889d357c4cf3466829be7442ae20b8507\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7754f20254d8c3f0567a07895fb2adefdc9e6547\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="G:\FingerPrintHome\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="4131cc15b342ce69fc6d59d702c5da31ded1c014">
+        sha1="d6ff1f209e95e52fbcb194d89ab02cf0499fd7e7">
         <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aecdf833a0a40e447b470e4ea1fcbceb5d7634cf\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\044ffaa5c4444c65d6a6957b6afd1d99996c7743\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="G:\FingerPrintHome\app\libs\systembartint-1.0.4.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9025d4d32a34006ea69fa9fbddf3e944c3dadc38\classes.dex" />
+        sha1="06404f77b92ec723cc132e825afe85a07da85ee6">
+        <dex dex="G:\FingerPrintHome\app\build\intermediates\pre-dexed\debug\systembartint-1.0.4_3c4607f32ba9b0885fd22aaf5d60299f009eba2a.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\6735baf87826cc5de5fe4ed58de886f16a99538c\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="G:\FingerPrintHome\app\libs\sun.misc.BASE64Decoder.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7078f54eea581bb15e4e2b526d7942cd41d9beb0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\YYY\.android\build-cache\1912493334f467e9237d2875d95747a043f9c837\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b0a59a4d801a6594d27d698484c2741f1f8d2e61\classes.dex" />
+        sha1="acd93e3727886196f9b8434279ff445ba8611186">
+        <dex dex="G:\FingerPrintHome\app\build\intermediates\pre-dexed\debug\sun.misc.BASE64Decoder_f48a53aab994fe6695ec26ac70fff9a510a4ad24.jar" />
     </item>
     <item
         is-multidex="true"

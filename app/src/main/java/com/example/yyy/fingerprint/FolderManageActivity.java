@@ -89,7 +89,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
         lv = (ListView)findViewById(R.id.folderlistview);
         //for (int i = 0;i<10;i++) strs.add(new String[]{"123123","123123123"});
-        arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.wenjianguanli_item,strs);
+        arrayAdapter = new FolderManageAdapter(FolderManageActivity.this,R.layout.foldermanage_item,strs);
         lv.setAdapter(arrayAdapter);
         //setListViewHeightBasedOnChildren(lv);
 

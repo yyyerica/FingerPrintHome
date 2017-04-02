@@ -3,12 +3,8 @@ package com.example.yyy.fingerprint;
 import android.Manifest;
 import android.app.Activity;
 
-import android.app.ActivityManager;
+
 import android.app.KeyguardManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.yyy.fingerprint.FolderManage.Authority;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.RequestService.Synchro;
@@ -48,8 +45,10 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 //    String[] arr1 = {"2-17","dota","16:45","guid"};
 //    String[] arr2 = {"2-14","lol","23:09","guid"};
 //    ArrayList<String[]> strs = new ArrayList<String[]>(){{add(arr1); add(arr1); add(arr1); add(arr1); add(arr1); add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);add(arr2);}};
-    ArrayList<String[]> strs = new ArrayList<String[]>(){};
-    ArrayList<String[]> deletestrs = new ArrayList<String[]>(){};
+    //ArrayList<String[]> strs = new ArrayList<String[]>(){};
+//    ArrayList<Authority[]> strs = new ArrayList<Authority[]>(){};
+
+    ArrayList<Synchro> strs = new ArrayList<Synchro>(){};
 
     private SlideCutListView lv;
     FrameLayout frameLayout;
@@ -67,7 +66,8 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        arrayAdapter = new MainListAdapter(getActivity(),R.layout.mainarray_item,strs);
+//        arrayAdapter = new MainListAdapter(getActivity(),R.layout.mainarray_item,strs);
+        arrayAdapter = new MainListAdapter(getActivity(),strs);
         //arrayAdapter.setDropDownViewResource();
         me = this;
 
@@ -188,7 +188,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
                 for(int i = 0 ; i < synchros.size(); i++) {
                     Synchro synchros1 = synchros.get(i);
 //                    if(synchros1.getAuthority_number()=="1")//打开
-                        strs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
+                        strs.add(synchros1);
 //                    else if(synchros1.getAuthority_number()=="0")//删除
 //                        deletestrs.add(new String[]{synchros1.getOperate_date(),synchros1.getFile_path(),synchros1.getOperate_time(),synchros1.getGuid()});
                     if (synchros1.getIsSend().equals("NO"))
@@ -233,13 +233,14 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
     //滑动删除之后的回调方法
     @Override
     public void removeItem(SlideCutListView.RemoveDirection direction, int position) {
-        arrayAdapter.remove(arrayAdapter.getItem(position));
+        //arrayAdapter.remove(arrayAdapter.getItem(position));
+        strs.remove(position);
+        arrayAdapter.notifyDataSetChanged();
 
         Synchro synchro = synchrosList.get(position);
         synchro.setIsPermit("NO");
 
         new VerifyThread(Keys.USER_ID,Keys.IMEI,synchro,AddressUtil.LOGIN_URL,getActivity()).start();
-
 //        switch (direction) {
 //            case RIGHT:
 //                Toast.makeText(getActivity(), "向右删除  "+ position, Toast.LENGTH_SHORT).show();

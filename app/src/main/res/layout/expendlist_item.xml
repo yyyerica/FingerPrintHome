@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginLeft="30dp"
-        android:layout_gravity="center"
-        android:gravity="left"/>
+        android:layout_gravity="left|center_vertical"
+        android:gravity="left|center_vertical"/>
 
     <!--//扩展ListView的子List布局文件-->
 </LinearLayout>

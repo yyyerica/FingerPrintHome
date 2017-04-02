@@ -46,7 +46,9 @@
                     android:layout_height="match_parent"
                     app:contentScrim="#42a7bb"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    app:layout_scrollFlags="scroll">
+                    <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+
                     <!--android:fitsSystemWindows="true"-->
                     <!--app:contentScrim="?attr/colorPrimary"-->
                     <!--Content scrim：ToolBar被折叠到顶部固定时候的背景，你可以调用setContentScrim(Drawable)方法改变背景或者 在属性中使用 app:contentScrim=?attr/colorPrimary来改变背景。-->
@@ -57,7 +59,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
-                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                        app:layout_scrollFlags="scroll|enterAlways"/>
                     <!--子视图的折叠模式-->
                     <!--app:popupTheme，这个属性就是用来自定义我们弹出的菜单的样式-->
                 </android.support.design.widget.CollapsingToolbarLayout>

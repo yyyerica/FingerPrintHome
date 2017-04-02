@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shapefile">
+
+    <ImageView
+        style="@style/layout_horizontal"
+        android:layout_weight="1"
+        android:src="@drawable/computer_icon"
+        android:paddingLeft="10dp"/>
+
+    <LinearLayout
+        style="@style/layout_horizontal"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户端 : "
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取名：电脑1"
+            android:textSize="30sp"
+            android:id="@+id/guidText"
+            android:layout_marginLeft="15dp"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="ip:194.111.111.11"-->
+            <!--android:id="@+id/guidText"-->
+            <!--android:textSize="10sp"-->
+            <!--android:layout_gravity="center"/>-->
+</LinearLayout>
+
+</LinearLayout>

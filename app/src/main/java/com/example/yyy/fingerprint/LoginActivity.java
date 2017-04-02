@@ -214,18 +214,18 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-//            mPasswordView.setError("密码长度不足！");
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError("密码长度不足！");
+            focusView = mPasswordView;
+            cancel = true;
+        }
 
         // Check for a valid email address.
-//        if (TextUtils.isEmpty(account)) {
-//            mAccountView.setError("账号为空！");
-//            focusView = mAccountView;
-//            cancel = true;
-//        }
+        if (TextUtils.isEmpty(account)) {
+            mAccountView.setError("账号为空！");
+            focusView = mAccountView;
+            cancel = true;
+        }
 //        else if (!isEmailValid(account)) {
 //            mAccountView.setError("账号格式不正确");
 //            focusView = mAccountView;
@@ -242,10 +242,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(true);
             String url = AddressUtil.LOGIN_URL;
             String id = Keys.USER_ID;
-           // mAuthTask = new LoginThread(id, account, password, Keys.IMEI, url, loginactivity);
+            mAuthTask = new LoginThread(id, account, password, Keys.IMEI, url, loginactivity);
 
             //三个被注释的地方！！！
-            mAuthTask = new LoginThread(id, "yyy", "yyyyy", Keys.IMEI, url, loginactivity);
+            //mAuthTask = new LoginThread(id, "yyy", "yyyyy", Keys.IMEI, url, loginactivity);
             mAuthTask.start();
         }
     }

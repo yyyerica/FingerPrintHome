@@ -77,7 +77,7 @@ public class ClientSettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_kehuduanshezhi);
+        setContentView(R.layout.activity_clientsetting);
 
         //状态栏颜色
         try {
@@ -155,7 +155,7 @@ public class ClientSettingActivity extends AppCompatActivity {
         if(bitmap!=null)
             imageview.setImageBitmap(bitmap);
 
-        arrayAdapter = new ClientSettingAdapter(this,R.layout.kehuduanshezhi_item,strs);
+        arrayAdapter = new ClientSettingAdapter(this,R.layout.clientsetting_item,strs);
         listview = (ListView)findViewById(R.id.kehuduanshezhiListView);
         listview.setAdapter(arrayAdapter);
 
@@ -264,7 +264,8 @@ public class ClientSettingActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 1:
-                    strs.clear();
+                    arrayAdapter.clear();
+                    //strs.clear();
                     authorityLis= (List<Authority>) msg.obj;
                     for(int i = 0;i < authorityLis.size();i++) {
                         Authority authority1 = authorityLis.get(i);
@@ -286,14 +287,12 @@ public class ClientSettingActivity extends AppCompatActivity {
                         }
                     }
 
-                    arrayAdapter.notifyDataSetChanged();
-
+                    //arrayAdapter.notifyDataSetChanged();
+                    listview.setAdapter(arrayAdapter);
                     setListViewHeight();
                     Log.e("ClientSettingActivity","arg1");
                     break;
-
             }
-
         }
     };
 
