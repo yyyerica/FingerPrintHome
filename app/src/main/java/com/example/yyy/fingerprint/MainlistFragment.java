@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.yyy.fingerprint.FolderManage.Authority;
 import com.example.yyy.fingerprint.LoginRegister.AddressUtil;
 import com.example.yyy.fingerprint.LoginRegister.Keys;
 import com.example.yyy.fingerprint.RequestService.Synchro;
@@ -77,7 +76,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.app_bar_main, null);
+        View view = inflater.inflate(R.layout.mainlist_fragment, null);
 
         frameLayout = (FrameLayout) view.findViewById(R.id.framelayout);
 
@@ -181,8 +180,11 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
         super.handleMessage(msg);
         switch (msg.arg1) {
             case 1:
+
                 strs.clear();
                 List<Synchro> synchros = (List<Synchro>) msg.obj;
+                if(synchros!=null)
+                    Log.e("MainlistHandler","synchrosList"+synchros.size());
                 synchrosList = synchros;
                 boolean isSend = true;
                 for(int i = 0 ; i < synchros.size(); i++) {
@@ -215,7 +217,7 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
                 }
                 Log.e("MainlistFragment","访问中");
 
-//                    View view = inflater.inflate(R.layout.app_bar_main, null);
+//                    View view = inflater.inflate(R.layout.mainlist_fragment, null);
 //                    lv = (ListView)view.findViewById(R.id.listview);
                 lv.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();

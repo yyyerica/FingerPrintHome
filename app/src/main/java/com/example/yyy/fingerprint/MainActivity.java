@@ -30,7 +30,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -277,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //声明后，用setSupportActionBar 设定，Toolbar即能取代原本的 actionbar 了
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.key);//设置app logo
+        toolbar.setLogo(R.drawable.e_lock);//设置app logo
 //        getSupportActionBar().setTitle("setTitle");//设置Toolbar标题
         toolbar.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
 

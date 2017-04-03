@@ -12,12 +12,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        toolbar:logo="@mipmap/ic_launcher"
+        android:background="#ffffffff"
+
         android:fitsSystemWindows="true">
 
     </android.support.v7.widget.Toolbar>
-
+    <!--toolbar:logo="@mipmap/ic_launcher"-->
 
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

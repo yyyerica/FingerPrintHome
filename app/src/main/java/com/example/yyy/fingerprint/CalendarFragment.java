@@ -41,7 +41,7 @@ public class CalendarFragment extends Fragment {
     ArrayList<String[]> strs = new ArrayList<String[]>(){};
 
     AlphaAnimation appearAnimation,disappearAnimation;
-    ImageView imageView2;
+    TextView imageView2, tag;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = View.inflate(getActivity(), R.layout.activity_calendar,
@@ -53,6 +53,7 @@ public class CalendarFragment extends Fragment {
         toolbarbottom = (Toolbar)view.findViewById(R.id.toolbarbottom);
         calendarlistview = (ListView) view.findViewById(R.id.calendarListview);
         toobarTitleText = (TextView) view.findViewById(R.id.toobarTitleText);
+        tag = (TextView)view.findViewById(R.id.tag);
 
         arrayAdapter = new CalendarListAdapter(getActivity(),R.layout.calendar_item,strs);
         lv = (ListView)view.findViewById(R.id.calendarListview) ;
@@ -164,10 +165,10 @@ public class CalendarFragment extends Fragment {
 
     public void operateDate() {
         //String[] thedate = date.split("-");
-        TextView tag = (TextView)view.findViewById(R.id.tag);
-        tag.setVisibility(View.GONE);
+
+
         toobarTitleText.setText(date);
-        calendarlistview.setVisibility(View.VISIBLE);
+
 
 //动画
         appearAnimation = new AlphaAnimation(0, 1);
@@ -177,7 +178,7 @@ public class CalendarFragment extends Fragment {
 //        disappearAnimation = new AlphaAnimation(1, 0);
 //        disappearAnimation.setDuration(5000);
 
-        imageView2 = (ImageView)view.findViewById(R.id.imageView2);
+        imageView2 = (TextView)view.findViewById(R.id.imageView2);
             //想让控件出现时
         if (imageView2.getVisibility() == View.GONE) {
             imageView2.startAnimation(appearAnimation);
@@ -220,6 +221,15 @@ public class CalendarFragment extends Fragment {
                         strs.add(new String[]{history.getFile_path(),history.getOperate_time()});
                         //Log.e("getFile_path",history.getFile_path());
                     }
+
+                    if(histories.size() == 0)
+                    {
+                        tag.setText("该日期没有历史记录");
+                    } else  {
+                        tag.setVisibility(View.GONE);
+                        calendarlistview.setVisibility(View.VISIBLE);
+                    }
+
                     lv.setAdapter(arrayAdapter);
                     arrayAdapter.notifyDataSetChanged();
                     break;

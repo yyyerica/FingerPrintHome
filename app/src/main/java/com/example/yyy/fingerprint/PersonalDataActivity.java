@@ -288,7 +288,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.key);//设置app logo
+        toolbar.setLogo(R.drawable.e_lock);//设置app logo
 
         toolbar.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
 

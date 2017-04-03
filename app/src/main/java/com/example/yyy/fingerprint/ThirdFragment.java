@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,11 +32,12 @@ public class ThirdFragment extends Fragment {
     private ArrayList<List<String>> item_list;
 //    private List<List<Integer>> item_list2;
     MyExpandableListViewAdapter myExpandableListViewAdapter;
+    FrameLayout frameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.third_fragment,null);
-
+        frameLayout = (FrameLayout) view.findViewById(R.id.framelayout);
 //        expandableListView_one =(ExpandableListView)view.findViewById(R.id.expandableListView);
         expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
         myExpandableListViewAdapter = new MyExpandableListViewAdapter(getActivity());
@@ -85,6 +87,7 @@ public class ThirdFragment extends Fragment {
                     group_list.clear();
                     item_list.clear();
                     List<Authority> authorityList = (List<Authority>) msg.obj;
+
                     for(int i = 0;i < authorityList.size();i++) {
                         Authority authority = authorityList.get(i);
                         if(authority.getNickname().equals("defaultcomputer")) {
@@ -118,6 +121,11 @@ public class ThirdFragment extends Fragment {
                         }
 
                     }
+
+                    if (group_list.size() == 0) {
+                        frameLayout.setVisibility(View.VISIBLE);
+                    } else frameLayout.setVisibility(View.GONE);
+
                     myExpandableListViewAdapter.notifyDataSetChanged();
                     break;
             }

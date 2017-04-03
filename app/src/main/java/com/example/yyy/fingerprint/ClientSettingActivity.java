@@ -28,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -72,6 +73,8 @@ public class ClientSettingActivity extends AppCompatActivity {
     String guid;
     EditText editText;
 
+    FrameLayout frameLayout;
+
     List<Authority> authorityLis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +96,13 @@ public class ClientSettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        frameLayout = (FrameLayout) findViewById(R.id.framelayout);
         toolbar2 = (Toolbar)findViewById(R.id.toolbar2);
         settoolbar();//工具栏
         new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, ClientSettingActivity.this).start();
+
+
+
 
         //侧滑栏
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -217,7 +223,8 @@ public class ClientSettingActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.key);//设置app logo
+        toolbar.setLogo(R.drawable.e_lock);//设置app logo
+
 
         toolbar.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
         getSupportActionBar().setTitle("客户端设置");
@@ -267,6 +274,10 @@ public class ClientSettingActivity extends AppCompatActivity {
                     arrayAdapter.clear();
                     //strs.clear();
                     authorityLis= (List<Authority>) msg.obj;
+
+
+
+
                     for(int i = 0;i < authorityLis.size();i++) {
                         Authority authority1 = authorityLis.get(i);
 //                        if(strs.size()==0)
@@ -286,6 +297,10 @@ public class ClientSettingActivity extends AppCompatActivity {
                             }
                         }
                     }
+
+                    if(strs.size() == 0) {
+                        frameLayout.setVisibility(View.VISIBLE);
+                    } else frameLayout.setVisibility(View.GONE);
 
                     //arrayAdapter.notifyDataSetChanged();
                     listview.setAdapter(arrayAdapter);

@@ -80,15 +80,18 @@
             <!--android:textSize="16sp" />-->
     </LinearLayout>
 
-    <ImageView
+    <TextView
         android:layout_width="240dp"
         android:layout_height="60dp"
-        android:src="@drawable/xiangxiajiantou"
+        android:textColor="@color/gray"
         android:id="@+id/imageView2"
         android:visibility="gone"
+        android:gravity="center"
+        android:textSize="20sp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"/>
-
+        android:layout_margin="30dp"
+        android:text="向下滑动获取详情"/>
+    <!--android:src="@drawable/xiangxiajiantou"-->
 
 </RelativeLayout>

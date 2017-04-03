@@ -12,39 +12,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="G:\FingerPrintHome\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d6ff1f209e95e52fbcb194d89ab02cf0499fd7e7">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aecdf833a0a40e447b470e4ea1fcbceb5d7634cf\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="G:\FingerPrintHome\app\libs\systembartint-1.0.4.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="06404f77b92ec723cc132e825afe85a07da85ee6">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\pre-dexed\debug\systembartint-1.0.4_3c4607f32ba9b0885fd22aaf5d60299f009eba2a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="G:\FingerPrintHome\app\libs\sun.misc.BASE64Decoder.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="acd93e3727886196f9b8434279ff445ba8611186">
-        <dex dex="G:\FingerPrintHome\app\build\intermediates\pre-dexed\debug\sun.misc.BASE64Decoder_f48a53aab994fe6695ec26ac70fff9a510a4ad24.jar" />
-    </item>
-    <item
-        is-multidex="true"
         jar="G:\FingerPrintHome\app\libs\systembartint-1.0.4.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="06404f77b92ec723cc132e825afe85a07da85ee6">
         <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\2\systembartint-1.0.4_3c4607f32ba9b0885fd22aaf5d60299f009eba2a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\FingerPrintHome\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9f9e644228dca7a9f98b468eebca27ae90c03ab6">
+        <dex dex="G:\FingerPrintHome\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aecdf833a0a40e447b470e4ea1fcbceb5d7634cf\classes.dex" />
     </item>
     <item
         is-multidex="true"

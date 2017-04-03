@@ -66,7 +66,7 @@ public class MainListAdapter extends BaseAdapter {
     @Override
      public int getViewTypeCount() {
          return 2;
-     }
+     } //打开，删除，批量删除
 
     public MainListAdapter(Context context, ArrayList<Synchro> objects) {
         this.objects = objects;

@@ -32,12 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ziliaonameText"
-            android:textSize="25sp" />
+            android:textSize="15sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ziliaoaddressText"
-            android:textSize="13sp" />
+            android:textSize="7sp" />
     </LinearLayout>
 </LinearLayout>
     <!--</FrameLayout>-->

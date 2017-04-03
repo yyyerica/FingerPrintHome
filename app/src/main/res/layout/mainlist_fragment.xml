@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--内容布局-->
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#9b9b9b"
+    android:layout_margin="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:background="@drawable/shapefile"-->
+    <!--滑动删除控件，是一个listview-->
+    <com.example.yyy.fingerprint.SlideCutListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listview"
+        tools:showIn="@layout/mainlist_fragment"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:padding="15dp"
+        android:background="#ffffff"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent">
+        <!--android:divider="#9b9b9b"-->
+        <!--android:dividerHeight="1dp"-->
+    </com.example.yyy.fingerprint.SlideCutListView>
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/framelayout"
+        android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有新消息哦"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:padding="20dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

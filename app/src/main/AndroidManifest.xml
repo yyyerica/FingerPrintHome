@@ -18,7 +18,7 @@
     <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon_fingerprint"
+        android:icon="@drawable/e_lock"
         android:label="e-Lock"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -54,7 +54,7 @@
         <!-- 静态注册广播接收器可以让程序在未启动的情况下就能接收广播 -->
         <receiver android:name=".RequestService.BootBroadcastReceiver">
             <intent-filter>
-                在AndroidManifest.xml中注册广播接收器，并设置action为android.intent.action.BOOT_COMPLETED，这样项目就能监听开机事件。
+                <!--在AndroidManifest.xml中注册广播接收器，并设置action为android.intent.action.BOOT_COMPLETED，这样项目就能监听开机事件。-->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

@@ -1,5 +1,6 @@
 package com.example.yyy.fingerprint;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -68,6 +70,8 @@ public class FolderManageActivity extends AppCompatActivity {
     private static int output_Y = 480;
     ImageView imageview;//头像
 
+    FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,8 @@ public class FolderManageActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        frameLayout = (FrameLayout) findViewById(R.id.framelayout);
 
         lv = (ListView)findViewById(R.id.folderlistview);
         //for (int i = 0;i<10;i++) strs.add(new String[]{"123123","123123123"});
@@ -178,7 +184,7 @@ public class FolderManageActivity extends AppCompatActivity {
         toolbartop = (Toolbar) findViewById(R.id.toolbar);
         //声明后，用setSupportActionBar 设定，Toolbar即能取代原本的 actionbar 了
         setSupportActionBar(toolbartop);
-        toolbartop.setLogo(R.drawable.key);//设置app logo
+        toolbartop.setLogo(R.drawable.e_lock);//设置app logo
         getSupportActionBar().setTitle("文件管理");
         toolbartop.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
 //        toolbar.setTitleTextAppearance(this,"30sp");//修改标题的字体大小
@@ -248,7 +254,7 @@ public class FolderManageActivity extends AppCompatActivity {
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
 
-        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1) +listView.getPaddingBottom()*2 + toolbar2.getHeight();
+        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1) + listView.getPaddingBottom()*2;
         listView.setLayoutParams(params);
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
@@ -261,7 +267,10 @@ public class FolderManageActivity extends AppCompatActivity {
 //        listView.requestLayout();
     }
 
-
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     public void request() {
         new GetAuthorityThread(Keys.USER_ID, Keys.IMEI, AddressUtil.LOGIN_URL, FolderManageActivity.this).start();
@@ -281,6 +290,10 @@ public class FolderManageActivity extends AppCompatActivity {
                         } else strs.add(new String[]{Authority1.getFile_path(),Authority1.getNickname()});
                     }
 
+                    if(strs.size()==0) {
+                        frameLayout.setVisibility(View.VISIBLE);
+                    } else frameLayout.setVisibility(View.GONE);
+
                     arrayAdapter.notifyDataSetChanged();
                     setListViewHeightBasedOnChildren(lv);
 //                    lv.post(new Runnable() {
@@ -291,7 +304,6 @@ public class FolderManageActivity extends AppCompatActivity {
 //                            setListViewHeightBasedOnChildren(lv);
 // }
 //                    });
-
                     break;
             }
 

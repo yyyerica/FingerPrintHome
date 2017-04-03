@@ -21,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 public class HelpActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -62,7 +60,7 @@ public class HelpActivity extends AppCompatActivity {
 
         //侧滑栏
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(1).setChecked(true);//默认选中
+        navigationView.getMenu().getItem(2).setChecked(true);//默认选中
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -117,10 +115,11 @@ public class HelpActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.key);//设置app logo
+        toolbar.setLogo(R.drawable.e_lock);//设置app logo
+
 
         toolbar.setTitleTextColor(Color.parseColor("#000000"));//设置标题颜色
-
+        getSupportActionBar().setTitle("帮助");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //创建返回键，并实现打开关/闭监听
@@ -137,6 +136,5 @@ public class HelpActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
-
 
 }
