@@ -13,8 +13,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -145,7 +146,7 @@ public class CalendarFragment extends Fragment {
         popupwindow_calendar_next_month
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        Log.e("CalendarFragment","calendar.nextMonth();");
+                        //Log.e("CalendarFragment","calendar.nextMonth();");
                         calendar.nextMonth();
                     }
                 });
@@ -163,12 +164,40 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) { // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            //listItem.measure( View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight + listView.getDividerHeight() * (listAdapter.getCount() - 1) + listView.getPaddingBottom()*2;
+        listView.setLayoutParams(params);
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+
+        //listView.setLayoutParams(params);
+        //LinearLayout layout = (LinearLayout)findViewById(R.id.customLayout);
+        //listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,height));
+
+//        layout.updateViewLayout(listView, params);
+//        listView.requestLayout();
+    }
+
     public void operateDate() {
+
         //String[] thedate = date.split("-");
-
-
         toobarTitleText.setText(date);
-
 
 //动画
         appearAnimation = new AlphaAnimation(0, 1);
@@ -199,12 +228,8 @@ public class CalendarFragment extends Fragment {
 //                    imageView2.setVisibility(View.GONE);
 //                }
 //            });
-
-
-            new GetHistoryThread(Keys.USER_ID, Keys.IMEI,date,AddressUtil.LOGIN_URL,this).start();
-
-
         }
+        new GetHistoryThread(Keys.USER_ID, Keys.IMEI,date,AddressUtil.LOGIN_URL,this).start();
     }
 
 
@@ -214,6 +239,7 @@ public class CalendarFragment extends Fragment {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 1:
+                    strs.clear();Log.e("CalendarFragment","0");
                     List<History> histories = (List<History>)msg.obj;
                     for(int i=0;i<histories.size();i++) {
                         History history = histories.get(i);
@@ -222,15 +248,21 @@ public class CalendarFragment extends Fragment {
                         //Log.e("getFile_path",history.getFile_path());
                     }
 
-                    if(histories.size() == 0)
-                    {
+                    Log.e("CalendarFragment","strs.size"+strs.size());
+                    if(strs.size() == 0)
+                    {Log.e("CalendarFragment","1");
+                        tag.setVisibility(View.VISIBLE);
                         tag.setText("该日期没有历史记录");
                     } else  {
+                        Log.e("CalendarFragment","2");
                         tag.setVisibility(View.GONE);
                         calendarlistview.setVisibility(View.VISIBLE);
+                        tag.setText("该日期没有历史记录");
                     }
 
                     lv.setAdapter(arrayAdapter);
+                    setListViewHeightBasedOnChildren(lv);
+
                     arrayAdapter.notifyDataSetChanged();
                     break;
             }

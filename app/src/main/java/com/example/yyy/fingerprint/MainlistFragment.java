@@ -196,29 +196,12 @@ public class MainlistFragment extends Fragment implements SlideCutListView.Remov
                     if (synchros1.getIsSend().equals("NO"))
                         isSend = false;
                 }
-                if(synchros.size()>0&&!isSend) {
-                        //推送
-//                    Intent intent;
-//                    PendingIntent pi;
-//                    intent = new Intent(getActivity(),MainActivity.class);
-//                    pi = PendingIntent.getActivity(getActivity(),0,intent,0);
-//                    NotificationManager myNotificationManager;
-//                        myNotificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
-//                    Notification notification;
-//                        notification = new Notification.Builder(getActivity()).
-//                                setAutoCancel(true).//设置打开该通知，该通知自动消失
-//                                setTicker("e-Locker").//设置显示在状态栏的通知提示消息
-//                                setSmallIcon(R.drawable.horn).//设置通知的图标
-//                                setContentTitle("你有新的请求消息").//设置通知内容的标题
-//                                setContentText("点击查看").//设置通知内容
-//                                setContentIntent(pi).//设置通知将要启动程序的Intent
-//                                build();
-//                        myNotificationManager.notify(NOTIFICATION_ID,notification);
-                }
+
                 Log.e("MainlistFragment","访问中");
 
 //                    View view = inflater.inflate(R.layout.mainlist_fragment, null);
 //                    lv = (ListView)view.findViewById(R.id.listview);
+
                 lv.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
 

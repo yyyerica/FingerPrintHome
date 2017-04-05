@@ -87,7 +87,6 @@
                 android:padding="15dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:layout_gravity="center"
                 android:visibility="gone">
             </ListView>
 
